@@ -1,0 +1,21 @@
+[[source]]
+
+name = "pypi"
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+
+[requires]
+
+
+
+[dev-packages]
+
+
+
+[packages]
+
+tilestache = {editable = true, git = "https://github.com/TileStache/TileStache.git"}
+gunicorn = "*"
+mapbox-vector-tile = "*"
+"psycopg2" = "*"

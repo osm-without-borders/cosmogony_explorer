@@ -13,72 +13,81 @@ Returns details about a zone and its direct children :
     "name": "Lyon",
     "parent": 195672,
     "zone_type": "city",
-    "admin_level": 8
+    "admin_level": 8,
+    "nb_children": 9
   },
-  "nb_children": 9,
   "children": [
     {
       "id": 116,
       "name": "Lyon 6e Arrondissement",
       "parent": 17716,
       "zone_type": "city_district",
-      "admin_level": 9
+      "admin_level": 9,
+      "nb_children": 0
     },
     {
       "id": 117,
       "name": "Lyon 2e Arrondissement",
       "parent": 17716,
       "zone_type": "city_district",
-      "admin_level": 9
+      "admin_level": 9,
+      "nb_children": 0
     },
     {
       "id": 118,
       "name": "Lyon 7e Arrondissement",
       "parent": 17716,
       "zone_type": "city_district",
-      "admin_level": 9
+      "admin_level": 9,
+      "nb_children": 0
     },
     {
       "id": 119,
       "name": "Lyon 8e Arrondissement",
       "parent": 17716,
       "zone_type": "city_district",
-      "admin_level": 9
+      "admin_level": 9,
+      "nb_children": 0
     },
     {
       "id": 120,
       "name": "Lyon 5e Arrondissement",
       "parent": 17716,
       "zone_type": "city_district",
-      "admin_level": 9
+      "admin_level": 9,
+      "nb_children": 0
     },
     {
       "id": 121,
       "name": "Lyon 1er Arrondissement",
       "parent": 17716,
       "zone_type": "city_district",
-      "admin_level": 9
+      "admin_level": 9,
+      "nb_children": 0
     },
     {
       "id": 179,
       "name": "Lyon 4e Arrondissement",
       "parent": 17716,
       "zone_type": "city_district",
-      "admin_level": 9
+      "admin_level": 9,
+      "nb_children": 0
     },
     {
       "id": 17717,
       "name": "Lyon 9e Arrondissement",
       "parent": 17716,
       "zone_type": "city_district",
-      "admin_level": 9
+      "admin_level": 9,
+      "nb_children": 0
     },
     {
       "id": 17718,
       "name": "Lyon 3e Arrondissement",
       "parent": 17716,
       "zone_type": "city_district",
-      "admin_level": 9
+      "admin_level": 9,
+      "nb_children": 0
     }
   ]
 }

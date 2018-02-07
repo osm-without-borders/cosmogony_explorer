@@ -4,7 +4,7 @@ The main goal of this tool is to have some visual and geographical feedback on [
 
 :construction::warning: This is a work in progress, and deeply connected to the Cosmogony output format :construction::warning:
 
-![example](src/images/cosmogony_explorer.gif)
+![cosmogoni demo](./demo.gif)
 
 
 ## Usage

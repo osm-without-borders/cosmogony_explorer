@@ -28,8 +28,8 @@ SINGLE_INSERT = """
     INSERT INTO zones
     VALUES (
         %(id)s, %(parent)s, %(name)s,
-        %(admin_level)s, %(admin_type)s, 
-        ST_SetSRID(ST_GeomFromGeoJSON(%(geometry)s), 4326)
+        %(admin_level)s, %(zone_type)s,
+        ST_Transform(ST_SetSRID(ST_GeomFromGeoJSON(%(geometry)s), 4326), 900913)
     )
 """
 
@@ -40,7 +40,7 @@ def import_cosmogony_to_pg(cosmogony_path):
             parent bigint,
             name varchar,
             admin_level int,
-            admin_type varchar,
+            zone_type varchar,
             geometry geometry,
             CONSTRAINT zones_pkey PRIMARY KEY (id)
         )

@@ -11,7 +11,7 @@ sudo docker-compose up -d
 
 echo "Import to Postgis will start..."
 sleep 10 # Waiting for postgres
-sudo docker-compose run -v "`dirname $(realpath $1)`:/tmp/volume" cosmogony-importer ./import.py /tmp/volume/$1
+sudo docker-compose run -v "`dirname $(realpath $1)`:/tmp/volume" cosmogony-importer ./import.py /tmp/volume/`basename $1`
 
 echo "Generating tiles..."
 sudo docker-compose run cosmogony-api ./src/tilestache/scripts/tilestache-seed.py -c tilestache.cfg -l vector-zones -b -85 -179.999 85 179.999 -e pbf 0 1 2 3 4 

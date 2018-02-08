@@ -1,0 +1,20 @@
+/* reset */
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+}
+
+A, A:active, A:focus {
+  outline: 0;
+}
+
+#map-container {
+  height: 100vh;
+}
+
+.hierarchy {
+  width: 300px;
+  height: 100vh;
+}

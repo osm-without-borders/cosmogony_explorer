@@ -1,0 +1,124 @@
+/* reset */
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+A, A:active, A:focus, BUTTON {
+  outline: none;
+}
+
+#map-container {
+  height: 100vh;
+}
+
+/* hierarchy */
+
+.hierarchy {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background: #fff;
+}
+
+.hierarchy__name {
+  padding: 20px 0 0 20px;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.hierarchy__name__level {
+  color: #4b6278;
+}
+
+.hierarchy__type {
+  padding: 0 0 40px 20px;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color:#c0bfc4
+}
+
+.hierarchy__category_title {
+  padding-left: 20px;
+  font-weight: normal;
+}
+
+.hierarchy__loader {
+  padding-left: 38px;
+}
+
+.hierarchy__secondary {
+  margin: 0 0 10px 20px;
+}
+
+/* layer_selector */
+
+.layer_selector {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.layer_selector__action {
+  display: block;
+  color: #fff;
+  background-color: #4b6278;
+  width: 120px;
+  text-align: center;
+  padding: 10px 20px;
+  transition: background-color .2s;
+}
+
+.layer_selector__action:hover {
+  background-color: #7996ab;
+}
+
+.layer_selector__action--active {
+  background-color: #dfe6ef;
+  color:#121314;
+}
+
+.layer_selector__action--active:hover {
+  background-color: #d0d7e7;
+  color:#121314;
+}
+
+/* sub */
+
+.sub__name {
+  font-weight: normal;
+  font-size: 14px;
+  color: #535961;
+}
+
+/* list & sub-list */
+.child {
+  list-style: none;
+  margin-left: 10px;
+  border-left: 1px solid #c2d9e2;
+}
+
+.child__toggle {
+  background: none;
+  font-size: 16px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.child__toggle:hover {
+  color: #4b6278;
+}
+
+.child__name {
+  cursor: pointer;
+}
+
+.child__name:hover {
+  color:#4b6278;
+  text-decoration: underline;
+}

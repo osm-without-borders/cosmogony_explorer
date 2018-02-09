@@ -1,6 +1,6 @@
 <template>
   <div class="sub">
-    <h4 class="sub__name">{{ hierarchy.name }} | {{ hierarchy.id }}</h4>
+    <h4 v-on:click="go(hierarchy)" class="sub__name">{{ hierarchy.name }} | {{ hierarchy.id }}</h4>
   </div>
 </template>
 
@@ -9,6 +9,11 @@
     name: "sub",
     props : [
       'hierarchy'
-    ]
+    ],
+    methods : {
+      go : function () {
+        fire('update_hierarchy', this.hierarchy)
+      }
+    }
   }
 </script>

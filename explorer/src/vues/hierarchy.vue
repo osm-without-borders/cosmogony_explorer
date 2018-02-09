@@ -35,7 +35,14 @@
     created : function () {
       listen('show_hierarchy', async (feature) => {
         this.hierarchy = await Hierarchy.load(feature)
+      }),
+      listen('update_hierarchy', async (hierarchy) => {
+        this.hierarchy = hierarchy
+        this.hierarchy.parent = await Hierarchy.getParents(hierarchy.id)
+        this.hierarchy.children = await Hierarchy.getChilden(hierarchy.id)
+        this.hierarchy.similars = []
       })
+
     }
   }
 </script>

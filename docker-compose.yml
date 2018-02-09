@@ -14,8 +14,16 @@ services:
     env_file: .env
     depends_on:
       - postgres
+  cosmogony-tiles:
+    build: ./tiles
+    env_file: .env
+    depends_on:
+      - postgres
+    ports:
+      - 6767:6767
   cosmogony-api:
     build: ./api
+    env_file: .env
     depends_on:
       - postgres
     ports:

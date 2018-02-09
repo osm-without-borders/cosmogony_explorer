@@ -14,6 +14,6 @@ sleep 10 # Waiting for postgres
 sudo docker-compose run -v "`dirname $(realpath $1)`:/tmp/volume" cosmogony-importer ./import.py /tmp/volume/`basename $1`
 
 echo "Generating tiles..."
-sudo docker-compose run cosmogony-api ./src/tilestache/scripts/tilestache-seed.py -c tilestache.cfg -l vector-zones -b -85 -179.999 85 179.999 -e pbf 0 1 2 3 4 
+sudo docker-compose exec cosmogony-tiles /usr/bin/t_rex generate -c /config.toml --minzoom 0 --maxzoom 8 --overwrite true --progress true  --extent -15,30,45,85
 
 sensible-browser "http://localhost:8585/#2.5/32/0"

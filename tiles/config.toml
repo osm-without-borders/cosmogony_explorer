@@ -1,0 +1,49 @@
+[service.mvt]
+viewer = true
+
+[[datasource]]
+name = "cosmogony"
+dbconn = "postgresql://cosmogony:cosmogony@postgres/cosmogony"
+
+[grid]
+predefined = "web_mercator"
+
+[[tileset]]
+name = "cosmogony"
+
+[[tileset.layer]]
+name = "vector-zones"
+datasource = "cosmogony"
+# Select all attributes of table:
+table_name = "zones"
+geometry_field = "geometry"
+geometry_type = "MULTIPOLYGON"
+srid = 3857
+fid_field = "id"
+buffer_size = 10
+simplify = true
+  # Queries for different zoom levels:
+  [[tileset.layer.query]]
+  minzoom = 0
+  maxzoom = 2
+  sql = """
+    SELECT id, name, admin_level, zone_type, geometry
+    FROM zones
+    WHERE geometry && !bbox! AND admin_level <= 2
+  """
+  [[tileset.layer.query]]
+  minzoom = 3
+  maxzoom = 20
+  sql = """
+    SELECT id, name, admin_level, zone_type, geometry
+    FROM zones
+    WHERE geometry && !bbox! 
+  """
+
+[cache.file]
+base = "/tmp/mvtcache"
+
+[webserver]
+bind = "0.0.0.0"
+port = 6767
+threads = 4

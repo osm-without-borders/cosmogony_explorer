@@ -1,21 +1,21 @@
 [[source]]
 
-name = "pypi"
-url = "https://pypi.python.org/simple"
 verify_ssl = true
-
-
-[requires]
-
-
-
-[dev-packages]
-
+url = "https://pypi.python.org/simple"
+name = "pypi"
 
 
 [packages]
 
-tilestache = {editable = true, git = "https://github.com/TileStache/TileStache.git"}
-gunicorn = "*"
-mapbox-vector-tile = "*"
-"psycopg2" = "*"
+apistar = "*"
+sqlalchemy = "*"
+"psycopg2-binary" = "*"
+
+
+[requires]
+
+python_version = "3.6"
+
+
+[dev-packages]
+

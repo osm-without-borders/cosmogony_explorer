@@ -29,7 +29,8 @@ SINGLE_INSERT = """
     VALUES (
         %(id)s, %(parent)s, %(name)s,
         %(admin_level)s, %(zone_type)s,
-        ST_Transform(ST_SetSRID(ST_GeomFromGeoJSON(%(geometry)s), 4326), 900913)
+        %(osm_id)s, %(wikidata)s,
+        ST_Transform(ST_SetSRID(ST_GeomFromGeoJSON(%(geometry)s), 4326), 3857)
     )
 """
 
@@ -41,13 +42,17 @@ def import_cosmogony_to_pg(cosmogony_path):
             name varchar,
             admin_level int,
             zone_type varchar,
+            osm_id varchar,
+            wikidata varchar,
             geometry geometry,
-            CONSTRAINT zones_pkey PRIMARY KEY (id)
+            PRIMARY KEY (id)
         )
         WITH (OIDS=FALSE);
 
         CREATE INDEX IF NOT EXISTS zones_geometry_idx 
             ON zones USING gist(geometry);
+
+        TRUNCATE zones;
     """)
 
 

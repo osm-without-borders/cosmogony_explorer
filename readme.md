@@ -12,6 +12,8 @@ The main goal of this tool is to have some visual and geographical feedback on [
 This will run docker-compose containers, import the cosmogony zones to
 Postgis, pre-generate tiles, and launch the explorer in your browser.
 
+
+You may need to run it with `sudo`, as it launches `docker-compose` commands.  
 ```bash
 ./run_explorer.sh cosmogony.json
 ```

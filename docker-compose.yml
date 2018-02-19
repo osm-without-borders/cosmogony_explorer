@@ -1,0 +1,36 @@
+version: "3"
+volumes:
+  pgdata:
+services:
+  postgres:
+    image: "openmaptiles/postgis:2.9"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432
+    env_file: .env
+  cosmogony-importer:
+    build: ./importer
+    env_file: .env
+    depends_on:
+      - postgres
+  cosmogony-tiles:
+    build: ./tiles
+    env_file: .env
+    depends_on:
+      - postgres
+    ports:
+      - 6767:6767
+  cosmogony-api:
+    build: ./api
+    env_file: .env
+    depends_on:
+      - postgres
+    ports:
+      - 8000:8000
+  explorer:
+    build: ./explorer
+    depends_on:
+      - cosmogony-api
+    ports:
+      - 8585:80

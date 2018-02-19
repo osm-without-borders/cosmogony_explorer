@@ -1,0 +1,21 @@
+[[source]]
+
+verify_ssl = true
+url = "https://pypi.python.org/simple"
+name = "pypi"
+
+
+[packages]
+
+apistar = "*"
+sqlalchemy = "*"
+"psycopg2-binary" = "*"
+
+
+[requires]
+
+python_version = "3.6"
+
+
+[dev-packages]
+

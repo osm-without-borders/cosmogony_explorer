@@ -45,7 +45,7 @@ mp.on("load", () => {
 
   mp.on('click', 'all', (e) => {
     if(e.features && e.features.length > 0) {
-      fire('show_hierarchy', e.features[0])
+      fire('update_hierarchy', e.features[0].id)
     }
   })
 

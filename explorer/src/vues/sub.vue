@@ -12,7 +12,7 @@
     ],
     methods : {
       go : function () {
-        fire('update_hierarchy', this.hierarchy)
+        fire('update_hierarchy', this.hierarchy.id)
       }
     }
   }

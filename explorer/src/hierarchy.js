@@ -2,22 +2,24 @@
 
 const API_URL = 'http://localhost:8585'
 
-function Hierarchy(id, name, level, zoneType) {
+function Hierarchy(id, name, level, zoneType, childrenCount) {
   this.id = id
   this.name = name
   this.level = level
   this.zoneType = zoneType
+  this.childrenCount = childrenCount
 }
 
 Hierarchy.fromJson = function(json) {
-  const id = json.id
-  const name = json.name
-  const level = json.admin_level
-  const type = json.zone_type
-  const hierarchy = new Hierarchy(id, name, level, type)
+  const id = json.zone.id
+  const name = json.zone.name
+  const level = json.zone.admin_level
+  const type = json.zone.zone_type
+  const childrenCount = json.zone.nb_children
+  const hierarchy = new Hierarchy(id, name, level, type, childrenCount)
   hierarchy.parent = json.parent
   hierarchy.children = json.children.map((child) => {
-    return new Hierarchy(child.id, child.name, child.admin_level, child.admin_type)
+    return new Hierarchy(child.id, child.name, child.admin_level, child.admin_type, child.nb_children)
   })
   return hierarchy
 }

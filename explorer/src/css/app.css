@@ -93,8 +93,17 @@ A, A:active, A:focus, BUTTON {
 .sub__name {
   font-weight: normal;
   font-size: 14px;
-  color: #535961;
+  color: #000;
+  cursor: pointer;
+  line-height: 22px;
 }
+
+.sub__name:hover {
+  color:#4b6278;
+  text-decoration: underline;
+}
+
+
 
 /* list & sub-list */
 .child {
@@ -112,6 +121,16 @@ A, A:active, A:focus, BUTTON {
 
 .child__toggle:hover {
   color: #4b6278;
+}
+
+
+.child__toggle--disabled {
+  color:palevioletred;
+  cursor:default;
+}
+
+.child__toggle--disabled:hover {
+  color:palevioletred;
 }
 
 .child__name {

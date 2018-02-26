@@ -1,7 +1,8 @@
 <template>
   <li class="child">
-    <button class="child__toggle icon-popin" v-on:click="toggle(hierarchy.id)"></button>
-    <span class="child__name">{{ hierarchy.name }}</span>
+    <button v-if="hierarchy.childrenCount > 0" class="child__toggle icon-popin" v-on:click="toggle(hierarchy.id)"></button>
+    <button v-else="" class="child__toggle child__toggle--disabled icon-popin"></button>
+    <span class="child__name" v-on:click="showHierarchy()">{{ hierarchy.name }}</span> | {{ hierarchy.childrenCount }}
     <ul class="child__items">
       <img v-if="wait" class="hierarchy__loader" src="/src/images/loader.gif"/>
       <Child v-for="child in children" v-bind:hierarchy="child"></Child>
@@ -33,6 +34,9 @@
           this.children = []
         }
         this.open = !this.open
+      },
+      showHierarchy : function (){
+        fire('update_hierarchy', this.hierarchy.id)
       }
     }
   }

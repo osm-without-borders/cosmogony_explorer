@@ -100,7 +100,7 @@ A, A:active, A:focus, BUTTON {
 .child {
   list-style: none;
   margin-left: 10px;
-  border-left: 1px solid #c2d9e2;
+  border-left: 1px solid #309e9d54;
 }
 
 .child__toggle {

@@ -34,7 +34,7 @@
     },
     created : function () {
       listen('show_hierarchy', async (feature) => {
-        this.hierarchy = await Hierarchy.load(feature)
+        this.hierarchy = await Hierarchy.load(feature.id)
       }),
       listen('update_hierarchy', async (hierarchy) => {
         this.hierarchy = hierarchy

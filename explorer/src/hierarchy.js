@@ -9,44 +9,44 @@ function Hierarchy(id, name, level, zoneType) {
   this.zoneType = zoneType
 }
 
-Hierarchy.load = async function (feature) {
-  let hierarchy = new Hierarchy(feature.id, feature.properties.name, feature.properties.admin_level, feature.properties.zone_type)
-  let [parents, children, similars] = await Promise.all([Hierarchy.getParents(hierarchy.id), Hierarchy.getChilden(hierarchy.id),Hierarchy.getSimilar(hierarchy.id)])
-  hierarchy.parents = parents
-  hierarchy.children = children
-  hierarchy.similars = similars
-  return new Promise((resolve) => {
-    resolve(hierarchy)
+Hierarchy.fromJson = function(json) {
+  const id = json.id
+  const name = json.name
+  const level = json.admin_level
+  const type = json.zone_type
+  const hierarchy = new Hierarchy(id, name, level, type)
+  hierarchy.parent = json.parent
+  hierarchy.children = json.children.map((child) => {
+    return new Hierarchy(child.id, child.name, child.admin_level, child.admin_type)
   })
+  return hierarchy
+}
+
+
+Hierarchy.load = async function (id) {
+  const rawHierarchy = await fetch(`${API_URL}/api/zones/${id}`)
+  const hierarchyData = await rawHierarchy.json()
+
+  const hierarchy = Hierarchy.fromJson(hierarchyData)
+  hierarchy.parents = await Hierarchy.getParents(id)
+
+  return hierarchy
 }
 
 Hierarchy.getParents = async (id) => {
-  //let response = await fetch(`${API_URL}/parents/${id}`)
-  //let parents = response.json()
-  return new Promise((resolve) => {
-    resolve([new Hierarchy(0, 'Hollywood', 99, 'sea')])
+  const rawHierarchy = await fetch(`${API_URL}/api/zones/${id}/parents`)
+  const hierarchyData = await rawHierarchy.json()
+
+  return hierarchyData.parents.map((parent) => {
+    return new Hierarchy(parent.id, parent.name, parent.admin_level, parent.admin_type)
   })
+
 }
 
-Hierarchy.getChilden = async (id) => {
-  //let response = await fetch(`${API_URL}/children/${id}`)
-  //let children = response.json()
-  return new Promise((resolve) => {
-    if(id === 9999)
-      setTimeout(() => {
-        resolve([new Hierarchy(1, 'Geo Panda Studio', 66, 'animal'), new Hierarchy(2, 'Geo Camel', 67, 'animal')])
-      }, 1500)
-    else
-      resolve([new Hierarchy(1, 'Disney Studio', 44, 'studio')])
-  })
+Hierarchy.getChildren = async (id) => {
+  const hierarchy = await Hierarchy.load(id)
+  return hierarchy.children
 }
 
-Hierarchy.getSimilar = async (id) => {
-  //let response = await fetch(`${API_URL}/similar/${id}`)
-  //let similar = response.json()
-  return new Promise((resolve) => {
-    resolve([new Hierarchy(2, 'Bollywood', 99, 'sea')])
-  })
-}
 
 export default Hierarchy

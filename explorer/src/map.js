@@ -17,7 +17,7 @@ mp.on("load", () => {
     'source-layer': 'vector-zones',
     'source': {
       'type': 'vector',
-      "tiles": ["http://localhost:8585/tiles/vector-zones/{z}/{x}/{y}.pbf"]
+      "tiles": ["http://localhost:8585/tiles/cosmogony/{z}/{x}/{y}.pbf"]
     },
     'layout': {
       'visibility': 'visible'

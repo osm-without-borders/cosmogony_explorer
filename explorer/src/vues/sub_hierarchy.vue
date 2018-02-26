@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: "sub",
+    name: "subHierarchy",
     props : [
       'hierarchy'
     ],

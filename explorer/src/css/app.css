@@ -33,14 +33,14 @@ A, A:active, A:focus, BUTTON {
 }
 
 .hierarchy__name__level {
-  color: #4b6278;
+  color: #484b53;
 }
 
 .hierarchy__type {
   padding: 0 0 40px 20px;
   letter-spacing: 2px;
   font-size: 12px;
-  color:#c0bfc4
+  color: #7f7e83
 }
 
 .hierarchy__category_title {
@@ -125,12 +125,12 @@ A, A:active, A:focus, BUTTON {
 
 
 .child__toggle--disabled {
-  color:palevioletred;
+  color: #bdc4cc;
   cursor:default;
 }
 
 .child__toggle--disabled:hover {
-  color:palevioletred;
+  color:#bdc4cc;
 }
 
 .child__name {

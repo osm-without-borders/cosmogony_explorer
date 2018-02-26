@@ -1,11 +1,11 @@
 <template>
   <li class="child">
-    <button v-if="hierarchy.childrenCount > 0" class="child__toggle icon-popin" v-on:click="toggle(hierarchy.id)"></button>
-    <button v-else="" class="child__toggle child__toggle--disabled icon-popin"></button>
-    <span class="child__name" v-on:click="showHierarchy()">{{ hierarchy.name }}</span> | {{ hierarchy.childrenCount }}
+    <button v-if="hierarchy.childrenCount > 0" class="child__toggle icon-stack" v-on:click="toggle(hierarchy.id)"></button>
+    <button v-else="" class="child__toggle child__toggle--disabled icon-stack"></button>
+    <span class="child__name" v-on:click="showHierarchy()">{{ hierarchy.name }}</span> | {{ hierarchy.level }}
     <ul class="child__items">
       <img v-if="wait" class="hierarchy__loader" src="/src/images/loader.gif"/>
-      <Child v-for="child in children" v-bind:hierarchy="child"></Child>
+      <Child v-for="child in children" v-bind:hierarchy="child" v-bind:key="child.id"></Child>
     </ul>
   </li>
 </template>

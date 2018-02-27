@@ -18,6 +18,8 @@ if(urlHash && urlHash.split('/').length > 2) { /* parse uri */
     navigator.geolocation.getCurrentPosition((position) => {
       State.center = [position.coords.longitude, position.coords.latitude]
       initMap(State.center, State.zoom)
+    }, () =>  {
+      initMap(State.center, State.zoom)
     })
   }
 }
@@ -27,9 +29,7 @@ if(window.location.hash.split('/').length > 3) {
 }
 
 function update(o) {
-  Object.keys(o).forEach((k) => {
-    State[k] = o[k]
-  })
+  Object.assign(State, o) 
   window.location.hash = `${State.zoom}/${State.center[0]}/${State.center[1]}${State.hierarchyId ? `/${State.hierarchyId}` : ''}`
 }
 

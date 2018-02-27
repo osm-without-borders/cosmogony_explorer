@@ -1,9 +1,18 @@
-From nginx:alpine
+From node:8.9-stretch
 
-RUN apk update && apk add git
+RUN rm /tmp/cosmo_build -rf&&\
+  apt update && apt install git -y&&\
+  apt install nginx -y
 
-WORKDIR /usr/share/nginx/html
+WORKDIR /tmp/cosmo_build
 
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
-COPY . /usr/share/nginx/html/
+RUN mkdir -p /tmp/cosmo_build
+COPY . /tmp/cosmo_build
+RUN cd /tmp/cosmo_build&&\
+  npm install&&\
+  node ./node_modules/webpack/bin/webpack --mode='development'&&\
+  cp /tmp/cosmo_build/. /usr/share/nginx/html/ -r
+
+CMD ["nginx", "-g", "daemon off;"]

@@ -23,11 +23,9 @@
       Child,
       SubHierarchy
     },
-    data : () => {
-      return {
-        hierarchy : null
-      }
-    },
+    data : () => ({
+      hierarchy : null
+    }),
     created : async function () {
       listen('update_hierarchy', async (hierarchyId) => {
         this.hierarchy = await  Hierarchy.load(hierarchyId)
@@ -35,7 +33,6 @@
         fire('select_hierarchy', hierarchyId)
 
       })
-
       if(State.hierarchyId) {
         this.hierarchy = await Hierarchy.load(State.hierarchyId)
       }

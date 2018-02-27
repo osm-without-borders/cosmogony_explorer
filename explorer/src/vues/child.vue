@@ -17,13 +17,12 @@
     props: [
       'hierarchy'
     ],
-    data : function () {
-      return {
+    data : () => ({
         open : false,
         children : [],
         wait : false
-      }
-    },
+
+    }),
     methods : {
       toggle : async function (id) {
         if(!this.open)  {

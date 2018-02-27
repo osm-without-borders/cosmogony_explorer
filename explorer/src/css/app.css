@@ -24,6 +24,7 @@ A, A:active, A:focus, BUTTON {
   width: 300px;
   height: 100vh;
   background: #fff;
+  overflow-y: scroll;
 }
 
 .hierarchy__name {

@@ -16,8 +16,7 @@
         fire('filter', layer.level)
       }
     },
-    data : () => {
-      return {
+    data : () => ({
         currentLayer : 4,
         toggleableLayers : [{
           'level': 10,
@@ -35,8 +34,7 @@
           'level': 2,
           'label': 'Level 2'
         }]
-      }
-    }
+    })
   }
 </script>
 

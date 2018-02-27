@@ -18,9 +18,9 @@ Hierarchy.fromJson = function(json) {
   const childrenCount = json.zone.nb_children
   const hierarchy = new Hierarchy(id, name, level, type, childrenCount)
   hierarchy.parent = json.parent
-  hierarchy.children = json.children.map((child) => {
-    return new Hierarchy(child.id, child.name, child.admin_level, child.admin_type, child.nb_children)
-  })
+  hierarchy.children = json.children.map((child) =>
+    new Hierarchy(child.id, child.name, child.admin_level, child.admin_type, child.nb_children)
+  )
   return hierarchy
 }
 

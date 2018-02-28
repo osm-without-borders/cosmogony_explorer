@@ -25,14 +25,14 @@
           'type': 'country_region',
           'label': 'Country region'
         }, {
+          'type': 'state',
+          'label': 'State'
+        }, {
           'type': 'state_district',
           'label': 'State district'
         }, {
           'type': 'city',
           'label': 'City'
-        }, {
-          'type': 'state',
-          'label': 'State'
         }, {
           'type': 'city_district',
           'label': 'City district'

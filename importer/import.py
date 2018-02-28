@@ -36,6 +36,8 @@ SINGLE_INSERT = """
 
 def import_cosmogony_to_pg(cosmogony_path):
     pg_execute("""
+        DROP TABLE IF EXISTS public.zones;
+
         CREATE TABLE IF NOT EXISTS public.zones(
             id bigint NOT NULL,
             parent bigint,
@@ -49,10 +51,9 @@ def import_cosmogony_to_pg(cosmogony_path):
         )
         WITH (OIDS=FALSE);
 
-        CREATE INDEX IF NOT EXISTS zones_geometry_idx 
-            ON zones USING gist(geometry);
+        CREATE INDEX ON zones USING gist(geometry);
 
-        TRUNCATE zones;
+        CREATE INDEX ON zones (parent);
     """)
 
 

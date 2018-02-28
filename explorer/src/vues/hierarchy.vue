@@ -1,14 +1,36 @@
 <template>
   <div class="hierarchy" v-if="hierarchy">
-    <h3 class="hierarchy__name">{{ hierarchy.name }} </h3>
-    <div class="hierarchy__type">{{ hierarchy.zoneType }} | <span class="hierarchy__name__level">{{ hierarchy.level }}</span></div>
-    <h3 class="hierarchy__category_title">Parent hierarchy</h3>
-    <div class="hierarchy__secondary">
-      <SubHierarchy v-for="parent in hierarchy.parents" v-bind:key="parent.id" v-bind:hierarchy="parent"></SubHierarchy>
+    <div class="hierarchy__current">
+      <h3 class="hierarchy__current__name">{{ hierarchy.name }} </h3>
+      <div class="hierarchy__current__type">{{ hierarchy.zoneType }}</div>
+      <div class="hierarchy__current__data">
+        <p class="hierarchy__current__data__container">
+          wikidata : <a class="hierarchy__current__data__wikidata" v-if="hierarchy.wikidata" v-bind:href="`https://www.wikidata.org/wiki/${hierarchy.wikidata}`">
+            {{ hierarchy.wikidata }}
+          </a>
+        </p>
+        <p class="hierarchy__current__data__container">
+          osm id : <a class="hierarchy__current__data__osm_id" v-if="hierarchy.osmID" v-bind:href="hierarchy.osmLink">
+           {{ hierarchy.osmID }}
+          </a>
+        </p>
+        <p class="hierarchy__current__data__container">
+            admin level : <span class="hierarchy__current__data__level">{{ hierarchy.level }}</span>
+        </p>
+        <p class="hierarchy__current__data__container">
+          cosmogony id : <span class="hierarchy__current__data__level">{{ hierarchy.id }}</span>
+        </p>
+      </div>
     </div>
-    <h3 class="hierarchy__category_title">Child hierarchy</h3>
+    <h3 class="hierarchy__category_title">Parents</h3>
     <div class="hierarchy__secondary">
-      <Child v-for="child in hierarchy.children" v-bind:key="child.id" v-bind:hierarchy="child"></Child>
+      <SubHierarchy v-for="parent in hierarchy.parents" v-bind:key="parent.id" v-bind:hierarchy="parent"/>
+      <span class="hierarchy__secondary__empty" v-if="hierarchy.parents.length === 0">- Empty -</span>
+    </div>
+    <h3 class="hierarchy__category_title">Children</h3>
+    <div class="hierarchy__secondary">
+      <Child v-for="child in hierarchy.children" v-bind:key="child.id" v-bind:hierarchy="child"/>
+      <span class="hierarchy__secondary__empty" v-if="hierarchy.children.length === 0">- Empty -</span>
     </div>
   </div>
 </template>

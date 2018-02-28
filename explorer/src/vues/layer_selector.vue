@@ -13,30 +13,36 @@
     methods : {
       filter : function(layer, i) {
         this.currentLayer = i
-        fire('filter', layer.level)
+        fire('filter', layer.type)
       }
     },
     data : () => ({
         currentLayer : 4,
         toggleableLayers : [{
-          'level': 10,
-          'label': 'Level 10'
+          'type': 'country',
+          'label': 'Country'
         }, {
-          'level': 9,
-          'label': 'Level 9'
+          'type': 'country_region',
+          'label': 'Country region'
         }, {
-          'level': 8,
-          'label': 'Level 8'
+          'type': 'state',
+          'label': 'State'
         }, {
-          'level': 6,
-          'label': 'Level 6'
+          'type': 'state_district',
+          'label': 'State district'
         }, {
-          'level': 2,
-          'label': 'Level 2'
+          'type': 'city',
+          'label': 'City'
+        }, {
+          'type': 'city_district',
+          'label': 'City district'
+        }, {
+          'type': 'suburb',
+          'label': 'Suburb'
+        }, {
+          'type': 'non_administrative',
+          'label': 'Other'
         }]
     })
   }
 </script>
-
-
-

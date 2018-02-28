@@ -27,25 +27,57 @@ A, A:active, A:focus, BUTTON {
   overflow-y: scroll;
 }
 
-.hierarchy__name {
-  padding: 20px 0 0 20px;
-  font-size: 16px;
-  font-weight: normal;
+.hierarchy__current {
+  position: relative;
+  background: #4b6278;
+  color:#fff;
+  height: 300px;
 }
 
-.hierarchy__name__level {
+.hierarchy__current__name {
+  padding: 20px 0 0 20px;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: serif;
+}
+
+.hierarchy__curent__name__level {
   color: #484b53;
 }
 
-.hierarchy__type {
-  padding: 0 0 40px 20px;
-  letter-spacing: 2px;
-  font-size: 12px;
-  color: #7f7e83
+.hierarchy__current__type {
+  padding: 0 0 140px 20px;
+  letter-spacing: 1px;
+  font-size: 14px;
+  color: #dddce1
 }
 
+.hierarchy__current__data {
+  position: absolute;
+  bottom: 20px;
+}
+
+.hierarchy__current__data__container {
+  padding: 0 0 0 20px;
+}
+
+.hierarchy__current__data__osm_id, .hierarchy__current__data__wikidata {
+  color: #e4bd2a;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.hierarchy__current__data__level {
+  color: #a8924a;
+}
+
+.hierarchy__current__data__wikidata:hover, .hierarchy__current__data__osm_id:hover {
+  text-decoration: underline;
+}
+
+
 .hierarchy__category_title {
-  padding-left: 20px;
+  padding: 20px 0 0 20px;
   font-weight: normal;
 }
 
@@ -55,6 +87,11 @@ A, A:active, A:focus, BUTTON {
 
 .hierarchy__secondary {
   margin: 0 0 10px 20px;
+}
+
+.hierarchy__secondary__empty {
+  font-size: 12px;
+  color: #888e94;
 }
 
 /* layer_selector */
@@ -67,11 +104,11 @@ A, A:active, A:focus, BUTTON {
 
 .layer_selector__action {
   display: block;
+  width: 160px;
+  padding: 10px 20px;
   color: #fff;
   background-color: #4b6278;
-  width: 120px;
-  text-align: center;
-  padding: 10px 20px;
+  text-align: left;
   transition: background-color .2s;
 }
 

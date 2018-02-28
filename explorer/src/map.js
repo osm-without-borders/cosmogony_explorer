@@ -43,11 +43,11 @@ function initMap(center, zoom) {
       mp.setFilter('all', ['==', 'id', State.hierarchyId])
     }
 
-    mp.on('zoom', (e) => {
+    mp.on('zoom', () => {
       updateUrl()
     })
 
-    mp.on('moveend', (e) => {
+    mp.on('moveend', () => {
       updateUrl()
     })
 
@@ -71,8 +71,8 @@ function initMap(center, zoom) {
       }
     })
 
-    listen('filter', (level) => {
-      mp.setFilter('all', ['==', 'admin_level', level])
+    listen('filter', (type) => {
+      mp.setFilter('all', ['==', 'zone_type', type])
     })
 
     listen('select_hierarchy', (id) => {

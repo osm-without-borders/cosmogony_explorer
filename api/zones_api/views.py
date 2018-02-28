@@ -13,7 +13,6 @@ def get_zone_with_children(session: Session, id: int):
 
     return {
         'zone': zone.as_json(),
-        'nb_children': len(children),
         'children': [z.as_json() for z in children]
     }
 

@@ -14,14 +14,16 @@ class Zone(Base):
     admin_level = Column(Integer)
 
     children = relationship('Zone',
-    	backref=backref('parent', remote_side=[id])
+        backref=backref('parent', remote_side=[id]),
+        lazy='joined'
     )
 
     def as_json(self):
-    	return {
-    		'id': self.id,
-    		'name': self.name,
-    		'parent': self.parent_id,
-    		'zone_type': self.zone_type,
-    		'admin_level': self.admin_level
-    	}
+        return {
+            'id': self.id,
+            'name': self.name,
+            'parent': self.parent_id,
+            'zone_type': self.zone_type,
+            'admin_level': self.admin_level,
+            'nb_children': len(self.children)
+        }

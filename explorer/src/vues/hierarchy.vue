@@ -5,12 +5,12 @@
       <div class="hierarchy__current__type">{{ hierarchy.zoneType }}</div>
       <div class="hierarchy__current__data">
         <p class="hierarchy__current__data__container">
-          wikidata : <a class="hierarchy__current__data__wikidata" v-if="hierarchy.wikidata" v-bind:href="`https://www.wikidata.org/wiki/${hierarchy.wikidata}`">
+          wikidata : <a class="hierarchy__current__data__wikidata" v-if="hierarchy.wikidata" v-bind:href="`https://www.wikidata.org/wiki/${hierarchy.wikidata}`" target="_blank">
             {{ hierarchy.wikidata }}
           </a>
         </p>
         <p class="hierarchy__current__data__container">
-          osm id : <a class="hierarchy__current__data__osm_id" v-if="hierarchy.osmID" v-bind:href="hierarchy.osmLink">
+          osm id : <a class="hierarchy__current__data__osm_id" v-if="hierarchy.osmID" v-bind:href="hierarchy.osmLink" target="_blank">
            {{ hierarchy.osmID }}
           </a>
         </p>

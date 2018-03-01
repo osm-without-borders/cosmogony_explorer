@@ -39,6 +39,25 @@ function initMap(center, zoom) {
       }
     })
 
+    mp.addLayer({
+      'id': "hover_only",
+      'type': 'fill',
+      'source-layer': 'vector-zones',
+      'source': {
+        'type': 'vector',
+        "tiles": ["http://localhost:8585/tiles/cosmogony/{z}/{x}/{y}.pbf"]
+      },
+      'layout': {
+        'visibility': 'none'
+      },
+      "filter": ["==", "admin_level", 2],
+      'paint': {
+        'fill-color': '#5fc7ff',
+        'fill-outline-color': "red",
+        'fill-opacity': 0.44
+      }
+    })
+
     if(State.hierarchyId) { /* load filter state-full */
       mp.setFilter('all', ['==', 'id', State.hierarchyId])
     }
@@ -54,6 +73,7 @@ function initMap(center, zoom) {
     mp.on('mousemove', "all", function (e) {
       mp.getCanvas().style.cursor = 'pointer'
       let feature = e.features[0]
+      fire('hover_hierarchy', feature.properties.id)
       popup.setLngLat(e.lngLat)
         .setText(feature.properties.name)
         .addTo(mp);
@@ -77,6 +97,11 @@ function initMap(center, zoom) {
 
     listen('select_hierarchy', (id) => {
       mp.setFilter('all', ['==', 'id', id])
+    })
+
+    listen('hover_hierarchy', (id) => {
+      mp.setFilter('hover_only', ['==', 'id', id])
+      mp.setLayoutProperty('hover_only', 'visibility', 'visible');
     })
 
   })

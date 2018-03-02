@@ -53,7 +53,9 @@
         this.hierarchy = await  Hierarchy.load(hierarchyId)
         update({hierarchyId : hierarchyId})
         fire('select_hierarchy', hierarchyId)
-
+      })
+      listen('filter', () => {
+        this.hierarchy = null /* clean current hierarchy */
       })
       if(State.hierarchyId) {
         this.hierarchy = await Hierarchy.load(State.hierarchyId)

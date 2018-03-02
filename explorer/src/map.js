@@ -93,6 +93,7 @@ function initMap(center, zoom) {
 
     listen('filter', (type) => {
       mp.setFilter('all', ['==', 'zone_type', type])
+      mp.setFilter('hover_only', ['==', 'id', -1]) /* clean hover selection */
     })
 
     listen('select_hierarchy', (id) => {

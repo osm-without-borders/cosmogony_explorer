@@ -12,8 +12,8 @@ def get_zone_with_children(session: Session, id: int):
     children = list(zone.children)
 
     return {
-        'zone': zone.as_json(with_bbox=True),
-        'children': [z.as_json(with_bbox=False) for z in children]
+        'zone': zone.as_json_with_bbox(),
+        'children': [z.as_json() for z in children]
     }
 
 
@@ -35,6 +35,6 @@ def get_zone_parents(session: Session, id: int):
         current_zone = p
 
     return {
-        'zone': zone.as_json(with_bbox=True),
-        'parents': [p.as_json(with_bbox=False) for p in parents],
+        'zone': zone.as_json_with_bbox(),
+        'parents': [p.as_json() for p in parents],
     }

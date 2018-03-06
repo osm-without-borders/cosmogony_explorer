@@ -30,8 +30,8 @@ class Zone(Base):
             return None
         return row[0]
 
-    def as_json(self, with_bbox):
-        j = {
+    def as_json(self):
+        return {
             'id': self.id,
             'name': self.name,
             'parent': self.parent_id,
@@ -42,6 +42,8 @@ class Zone(Base):
             'admin_level': self.admin_level,
             'nb_children': len(self.children),
         }
-        if with_bbox:
-            j['bbox'] = json.loads(self.bounding_box)
-        return j
+
+    def as_json_with_bbox(self):
+        res = self.as_json()
+        res['bbox'] = json.loads(self.bounding_box)
+        return res

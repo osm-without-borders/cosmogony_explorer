@@ -2,7 +2,7 @@
   <li class="child">
     <button v-if="hierarchy.childrenCount > 0" class="child__toggle icon-stack" v-on:click="toggle(hierarchy.id)"></button>
     <button v-else="" class="child__toggle child__toggle--disabled icon-stack"></button>
-    <span class="child__name" v-on:click="showHierarchy()">{{ hierarchy.name }}</span>
+    <span class="child__name" v-on:click="highlightHierarchy()" v-on:mouseover="hover(hierarchy.id)">{{ hierarchy.name }}</span>
     <ul class="child__items">
       <img v-if="wait" class="hierarchy__loader" src="/src/images/loader.gif"/>
       <Child v-for="child in children" v-bind:hierarchy="child" v-bind:key="child.id"/>
@@ -34,7 +34,10 @@
         }
         this.open = !this.open
       },
-      showHierarchy : function (){
+      hover : function (id) {
+        fire('hover_hierarchy', this.hierarchy.id)
+      },
+      highlightHierarchy : function (){
         fire('update_hierarchy', this.hierarchy.id)
       }
     }

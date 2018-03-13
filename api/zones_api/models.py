@@ -1,6 +1,8 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import object_session
+import json
 
 Base = declarative_base()
 
@@ -20,6 +22,14 @@ class Zone(Base):
         lazy='joined'
     )
 
+    @property
+    def bounding_box(self):
+        query = 'select st_asgeojson(ST_Transform(st_envelope(geometry), 4326)) from zones where id = :id'
+        row = object_session(self).execute(query, {'id': self.id}).first()
+        if row is None:
+            return None
+        return row[0]
+
     def as_json(self):
         return {
             'id': self.id,
@@ -30,5 +40,10 @@ class Zone(Base):
             'osm_link': f'https://www.openstreetmap.org/relation/{self.osm_id}', # TODO only relation for now
             'wikidata': self.wikidata,
             'admin_level': self.admin_level,
-            'nb_children': len(self.children)
+            'nb_children': len(self.children),
         }
+
+    def as_json_with_bbox(self):
+        res = self.as_json()
+        res['bbox'] = json.loads(self.bounding_box)
+        return res

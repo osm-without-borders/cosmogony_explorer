@@ -74,8 +74,11 @@ function initMap(center, zoom) {
       mp.getCanvas().style.cursor = 'pointer'
       let feature = e.features[0]
       fire('hover_hierarchy', feature.properties.id)
+      let featureInfo = `<ul>${e.features.map((feature) => {
+        return `<li class="map__popup__item">${feature.properties.name}</li>`
+      }).join('')}</ul>`
       popup.setLngLat(e.lngLat)
-        .setText(feature.properties.name)
+        .setHTML(featureInfo)
         .addTo(mp);
     })
 
@@ -85,9 +88,11 @@ function initMap(center, zoom) {
     })
 
     mp.on('click', 'all', (e) => {
-      if(e.features && e.features.length > 0) {
+      if(e.features && e.features.length === 1) {
         fire('update_hierarchy', e.features[0].id)
         fire('select_hierarchy', e.features[0].id)
+      } else if(e.features && e.features.length > 1) {
+        fire('show_multiple_hierarchy', e.features)
       }
     })
 

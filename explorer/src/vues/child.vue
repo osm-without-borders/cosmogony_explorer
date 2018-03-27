@@ -33,8 +33,8 @@
           this.children = []
         }
         this.open = !this.open
-      },
-      hover : function (id) {
+      }, 
+      hover : async function () {
         fire('hover_hierarchy', this.hierarchy.id)
       },
       highlightHierarchy : function (){

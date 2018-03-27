@@ -4,7 +4,10 @@
   "description": "The main goal of this tool is to have some visual and geographical feedback on [Cosmogony](https://github.com/osm-without-borders/cosmogony) output.",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start" : "http-server -c-1 ./",
+    "build" : "webpack",
+    "watch" : "webpack -w"
   },
   "repository": {
     "type": "git",

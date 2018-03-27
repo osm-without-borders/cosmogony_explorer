@@ -4,9 +4,12 @@
       <div class="modal__overlay"></div>
       <div class="modal__content" >
         <div class="icon-cancel modal__close" v-on:click="close"></div>
-
-        <ul class="modal__hierarchies" v-for="feature in this.features">
-          <li class="modal__hierarchy" v-on:click="showHierarchy(feature)">( {{ feature.properties.id }} ) {{ feature.properties.name }}</li>
+        <h4 class="modal__title">Select zone</h4>
+        <ul class="modal__hierarchies">
+          <li class="modal__hierarchy" v-for="feature in this.features" v-on:click="showHierarchy(feature)">
+            {{ feature.properties.name }}
+            <span class="modal__admin_level"> (type : {{ feature.properties.zone_type }} )</span>
+          </li>
         </ul>
 
       </div>

@@ -191,6 +191,12 @@ LI {
   top: 10px;
 }
 
+.modal__title {
+  margin: 20px;
+  font-size: 22px;
+  font-weight: normal;
+}
+
 .modal__overlay {
   position: absolute;
   top: 0;
@@ -229,4 +235,9 @@ LI {
 
 .modal__fade-enter, .modal__fade-leave-to {
   opacity: 0;
+}
+
+.modal__admin_level {
+  font-size: 14px;
+  color: #31404e;
 }

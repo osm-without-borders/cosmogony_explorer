@@ -11,6 +11,10 @@ A, A:active, A:focus, BUTTON {
   outline: none;
 }
 
+LI {
+  list-style: none;
+}
+
 #map-container {
   height: 100vh;
 }
@@ -178,4 +182,62 @@ A, A:active, A:focus, BUTTON {
 .child__name:hover {
   color:#4b6278;
   text-decoration: underline;
+}
+
+/* modal */
+.modal__close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.modal__title {
+  margin: 20px;
+  font-size: 22px;
+  font-weight: normal;
+}
+
+.modal__overlay {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,.5);
+}
+
+.modal__content {
+  position: absolute;
+  top: calc(50vh - 150px);
+  left: calc(50vw - 200px);
+  background: #fff;
+  height: 300px;
+  width: 400px;
+  margin: auto;
+}
+
+.modal__hierarchies {
+  margin-top: 30px;
+}
+
+.modal__hierarchy {
+  padding: 4px 20px;
+  cursor: pointer;
+}
+
+.modal__hierarchy:hover {
+  background: #f8fafc;
+  color: #4b6278;
+}
+
+.modal__fade-enter-active, .modal__fade-leave-active {
+  transition: opacity .2s;
+}
+
+.modal__fade-enter, .modal__fade-leave-to {
+  opacity: 0;
+}
+
+.modal__admin_level {
+  font-size: 14px;
+  color: #31404e;
 }

@@ -1,6 +1,4 @@
-
-
-const API_URL = 'http://localhost:8585'
+import { ROOT_URL } from './index';
 
 function Hierarchy(id, name, level, zoneType, childrenCount, osmID, osmLink, wikidata) {
   this.id = id
@@ -33,7 +31,7 @@ Hierarchy.fromJson = function(json) {
 
 
 Hierarchy.load = async function (id) {
-  const rawHierarchy = await fetch(`${API_URL}/api/zones/${id}`)
+  const rawHierarchy = await fetch(`${ROOT_URL}/api/zones/${id}`)
   const hierarchyData = await rawHierarchy.json()
 
   const hierarchy = Hierarchy.fromJson(hierarchyData)
@@ -43,7 +41,7 @@ Hierarchy.load = async function (id) {
 }
 
 Hierarchy.getParents = async (id) => {
-  const rawHierarchy = await fetch(`${API_URL}/api/zones/${id}/parents`)
+  const rawHierarchy = await fetch(`${ROOT_URL}/api/zones/${id}/parents`)
   const hierarchyData = await rawHierarchy.json()
 
   return hierarchyData.parents.map((parent) => {

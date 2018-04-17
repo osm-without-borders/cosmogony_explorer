@@ -19,7 +19,8 @@ class Zone(Base):
 
     children = relationship('Zone',
         backref=backref('parent', remote_side=[id]),
-        lazy='joined'
+        lazy='joined',
+        join_depth=2 # Fetch zone, children and children's children with a single query
     )
 
     @property

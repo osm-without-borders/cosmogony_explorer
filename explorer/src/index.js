@@ -5,7 +5,7 @@ import Vue from 'vue'
 import App from 'vue-loader!./vues/app.vue'
 import listen from "./listen";
 
-export const ROOT_URL = "http://163.172.175.114";
+export const ROOT_URL = location.protocol+'//'+location.host;
 
 new Vue({
   el: '#root',

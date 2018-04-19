@@ -21,14 +21,16 @@ export function initMap(center, zoom) {
   })
 
   mp.on("load", () => {
+    mp.addSource('zones', {
+      'type': 'vector',
+      'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
+    })
+
     mp.addLayer({
       'id': "all",
       'type': 'fill',
+      'source': 'zones',
       'source-layer': 'vector-zones',
-      'source': {
-        'type': 'vector',
-        "tiles": [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
-      },
       'layout': {
         'visibility': 'visible'
       },
@@ -43,15 +45,9 @@ export function initMap(center, zoom) {
     mp.addLayer({
       'id': "hover_only",
       'type': 'fill',
+      'source': 'zones',
       'source-layer': 'vector-zones',
-      'source': {
-        'type': 'vector',
-        "tiles": [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
-      },
-      'layout': {
-        'visibility': 'none'
-      },
-      "filter": ["==", "zone_type", "country"],
+      "filter": ['==', 'id', -1],
       'paint': {
         'fill-color': '#5fc7ff',
         'fill-outline-color': "red",
@@ -106,10 +102,16 @@ export function initMap(center, zoom) {
       mp.setFilter('all', ['==', 'id', id])
     })
 
-    listen('hover_hierarchy', (id) => {
-      mp.setFilter('hover_only', ['==', 'id', id])
-      mp.setLayoutProperty('hover_only', 'visibility', 'visible');
-    })
+    let hoverTimeout = null;
 
+    listen('hover_hierarchy', (id) => {
+      if(hoverTimeout){
+        clearTimeout(hoverTimeout);
+      }
+      hoverTimeout = setTimeout(function(){
+        hoverTimeout = null;
+        mp.setFilter('hover_only', ['==', 'id', id])
+      }, 40)
+    })
   })
 }

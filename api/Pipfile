@@ -7,7 +7,7 @@ name = "pypi"
 
 [packages]
 
-apistar = "*"
+apistar = "==0.3.9"
 sqlalchemy = "*"
 "psycopg2-binary" = "*"
 

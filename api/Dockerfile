@@ -9,4 +9,4 @@ RUN pipenv install --system --deploy
 
 COPY . ./
 
-ENTRYPOINT gunicorn app:app --bind=0.0.0.0:8000 --pid=pid --worker-class=meinheld.gmeinheld.MeinheldWorker --preload
+ENTRYPOINT gunicorn app:app --workers=3 --bind=0.0.0.0:8000 --pid=pid --worker-class=meinheld.gmeinheld.MeinheldWorker --preload

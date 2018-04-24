@@ -1,13 +1,8 @@
-let mp = null
+import { ROOT_URL } from './index';
+import { State, update } from './url_state'
 
-function updateUrl() {
-  const zoom = mp.getZoom()
-  const center = mp.getCenter() // #4/43.49/7.93
-  update({zoom:zoom.toFixed(0), center:[center.lng.toFixed(2), center.lat.toFixed(2)]})
-}
-
-function initMap(center, zoom) {
-  mp = new mapboxgl.Map({
+export function initMap(center, zoom) {
+  const mp = new mapboxgl.Map({
     container: 'map-container',
     style: 'https://openmaptiles.github.io/positron-gl-style/style-cdn.json',
     zoom: zoom,
@@ -15,19 +10,27 @@ function initMap(center, zoom) {
     hash: false
   })
 
+  function updateUrl() {
+    const zoom = mp.getZoom()
+    const center = mp.getCenter() // #4/43.49/7.93
+    update({zoom:zoom.toFixed(2), center:[center.lng.toFixed(2), center.lat.toFixed(2)]})
+  }
+
   const popup = new mapboxgl.Popup({
     closeButton: false
   })
 
   mp.on("load", () => {
+    mp.addSource('zones', {
+      'type': 'vector',
+      'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
+    })
+
     mp.addLayer({
       'id': "all",
       'type': 'fill',
+      'source': 'zones',
       'source-layer': 'vector-zones',
-      'source': {
-        'type': 'vector',
-        "tiles": ["http://localhost:8585/tiles/cosmogony/{z}/{x}/{y}.pbf"]
-      },
       'layout': {
         'visibility': 'visible'
       },
@@ -42,15 +45,9 @@ function initMap(center, zoom) {
     mp.addLayer({
       'id': "hover_only",
       'type': 'fill',
+      'source': 'zones',
       'source-layer': 'vector-zones',
-      'source': {
-        'type': 'vector',
-        "tiles": ["http://localhost:8585/tiles/cosmogony/{z}/{x}/{y}.pbf"]
-      },
-      'layout': {
-        'visibility': 'none'
-      },
-      "filter": ["==", "admin_level", 2],
+      "filter": ['==', 'id', -1],
       'paint': {
         'fill-color': '#5fc7ff',
         'fill-outline-color': "red",
@@ -105,10 +102,16 @@ function initMap(center, zoom) {
       mp.setFilter('all', ['==', 'id', id])
     })
 
-    listen('hover_hierarchy', (id) => {
-      mp.setFilter('hover_only', ['==', 'id', id])
-      mp.setLayoutProperty('hover_only', 'visibility', 'visible');
-    })
+    let hoverTimeout = null;
 
+    listen('hover_hierarchy', (id) => {
+      if(hoverTimeout){
+        clearTimeout(hoverTimeout);
+      }
+      hoverTimeout = setTimeout(function(){
+        hoverTimeout = null;
+        mp.setFilter('hover_only', ['==', 'id', id])
+      }, 40)
+    })
   })
 }

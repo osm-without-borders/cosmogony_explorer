@@ -19,7 +19,8 @@ class Zone(Base):
 
     children = relationship('Zone',
         backref=backref('parent', remote_side=[id]),
-        lazy='joined'
+        lazy='joined',
+        join_depth=2 # Fetch zone, children and children's children with a single query
     )
 
     @property
@@ -30,6 +31,15 @@ class Zone(Base):
             return None
         return row[0]
 
+    @property
+    def osm_link(self):
+        if ':' in self.osm_id:
+            osm_path = self.osm_id.replace(':','/')
+        else:
+            # Old versions of cosmogony use integers as ids (relations only)
+            osm_path = f'relation/{self.osm_id}'
+        return f'https://www.openstreetmap.org/{osm_path}'
+
     def as_json(self):
         return {
             'id': self.id,
@@ -37,7 +47,7 @@ class Zone(Base):
             'parent': self.parent_id,
             'zone_type': self.zone_type,
             'osm_id': self.osm_id,
-            'osm_link': f'https://www.openstreetmap.org/relation/{self.osm_id}', # TODO only relation for now
+            'osm_link': self.osm_link,
             'wikidata': self.wikidata,
             'admin_level': self.admin_level,
             'nb_children': len(self.children),

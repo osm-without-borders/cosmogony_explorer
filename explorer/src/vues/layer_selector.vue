@@ -17,7 +17,7 @@
       }
     },
     data : () => ({
-        currentLayer : 4,
+        currentLayer : 0,
         toggleableLayers : [{
           'type': 'country',
           'label': 'Country'

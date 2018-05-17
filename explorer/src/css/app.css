@@ -45,12 +45,23 @@ LI {
   font-family: serif;
 }
 
+.hierarchy__current__zoom_button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: block;
+  background: none;
+  color : #d0d7e7;
+  font-size: 30px;
+  cursor: pointer;
+}
+
 .hierarchy__curent__name__level {
   color: #484b53;
 }
 
 .hierarchy__current__type {
-  padding: 0 0 140px 20px;
+  padding: 0 0 20px 20px;
   letter-spacing: 1px;
   font-size: 14px;
   color: #dddce1

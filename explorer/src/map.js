@@ -113,5 +113,14 @@ export function initMap(center, zoom) {
         mp.setFilter('hover_only', ['==', 'id', id])
       }, 40)
     })
+
+    listen('zoom_to', (hierarchy) => {
+      let bounds = hierarchy.bbox.reduce(function(bounds, coord) {
+        return bounds.extend(coord);
+      }, new mapboxgl.LngLatBounds(hierarchy.bbox[0], hierarchy.bbox[0]))
+
+      mp.fitBounds(bounds, {padding : {left: 310, right : 10, top : 10, bottom: 10}});
+    })
+
   })
 }

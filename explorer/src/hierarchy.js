@@ -1,6 +1,6 @@
 import { ROOT_URL } from './index';
 
-function Hierarchy(id, name, level, zoneType, childrenCount, osmID, osmLink, wikidata) {
+function Hierarchy(id, name, level, zoneType, childrenCount, osmID, osmLink, wikidata, bbox) {
   this.id = id
   this.name = name
   this.level = level
@@ -9,6 +9,7 @@ function Hierarchy(id, name, level, zoneType, childrenCount, osmID, osmLink, wik
   this.osmID = osmID
   this.osmLink = osmLink
   this.wikidata = wikidata
+  this.bbox = bbox
 }
 
 Hierarchy.fromJson = function(json) {
@@ -20,8 +21,9 @@ Hierarchy.fromJson = function(json) {
   const osmID = json.zone.osm_id
   const osmLink = json.zone.osm_link
   const wikidata = json.zone.wikidata
+  const bbox = json.zone.bbox.coordinates[0]
 
-  const hierarchy = new Hierarchy(id, name, level, type, childrenCount, osmID, osmLink, wikidata)
+  const hierarchy = new Hierarchy(id, name, level, type, childrenCount, osmID, osmLink, wikidata, bbox)
   hierarchy.parent = json.parent
   hierarchy.children = json.children.map((child) =>
     new Hierarchy(child.id, child.name, child.admin_level, child.zone_type, child.nb_children)

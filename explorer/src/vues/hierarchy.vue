@@ -1,8 +1,12 @@
 <template>
   <div class="hierarchy" v-if="hierarchy">
     <div class="hierarchy__current">
-      <h3 class="hierarchy__current__name">{{ hierarchy.name }} </h3>
+      <h3 class="hierarchy__current__name">
+        {{ hierarchy.name }}
+      </h3>
       <div class="hierarchy__current__type">{{ hierarchy.zoneType }}</div>
+
+      <button class="hierarchy__current__zoom_button icon-paperplane" v-on:click="zoom()"></button>
       <div class="hierarchy__current__data">
         <p class="hierarchy__current__data__container">
           wikidata : <a class="hierarchy__current__data__wikidata" v-if="hierarchy.wikidata" v-bind:href="`https://www.wikidata.org/wiki/${hierarchy.wikidata}`" target="_blank">
@@ -49,6 +53,11 @@
     data : () => ({
       hierarchy : null
     }),
+    methods : {
+      zoom : function() {
+        fire('zoom_to', this.hierarchy)
+      }
+    },
     created : async function () {
       listen('update_hierarchy', async (hierarchyId) => {
         this.hierarchy = await  Hierarchy.load(hierarchyId)

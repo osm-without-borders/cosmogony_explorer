@@ -10,6 +10,11 @@
 
   export default {
     name: "layer_selector",
+    created : function () {
+      listen('update_hierarchy', () => {
+        this.currentLayer = -1
+      })
+    },
     methods : {
       filter : function(layer, i) {
         this.currentLayer = i

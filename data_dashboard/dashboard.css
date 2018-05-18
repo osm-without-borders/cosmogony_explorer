@@ -5,9 +5,30 @@
   color: #232527;
 }
 
+H2, H3 {
+  color: #353b48;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+UL {list-style: none}
+LI {
+  margin-bottom: 4px;
+}
+
+A {
+  color: #1793d8;
+}
+
 #volumetric-dashboard {
   border: none;
   width: 80vw;
+  margin:50px 10vw 0;
+  border-collapse: collapse;
+}
+
+TD {
+  text-align: center;
 }
 
 #volumetric-dashboard td, #volumetric-dashboard th {
@@ -17,15 +38,73 @@
 
 #volumetric-dashboard tr th {
   font-size: 18px;
+  height: 40px;
   font-weight: normal;
-  background: #6b8ca6;
-  color: #fff;
+  background: #ffffff;
+  color: #212427;
 }
 
-#volumetric-dashboard tr:nth-child(odd) {
+#volumetric-dashboard tr:nth-child(odd), #volumetric-dashboard tr {
+  transition: background-color .2s;
+}
+
+#volumetric-dashboard tr:nth-child(odd), tr:nth-child(odd) {
   background-color: #e9eff9;
 }
 
-table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
-  content: " \25B4\25BE"
+#volumetric-dashboard tr:nth-child(odd):hover {
+  background-color: #d0d6e0;
+}
+
+#volumetric-dashboard tr:hover {
+  background-color: #e5ebf5;
+}
+
+
+#volumetric-dashboard .ko_column, #volumetric-dashboard .ko_column:hover {
+  background-color: #ffdadc;
+}
+
+#volumetric-dashboard tr:nth-child(odd).ko_column, #volumetric-dashboard  tr:nth-child(odd).ko_column:hover, .ko_column {
+  background-color: #f7ccd7;
+}
+
+.status_detail, .result__expected {
+  font-size: 12px;
+  color: #2d2f36;
+}
+
+.result__name, .name {
+  text-align: left;
+}
+
+.result__monitor {
+  width: 300px;
+}
+
+.article__container {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 10vw;
+  width: 80vw;
+}
+
+.article {
+  width: 500px;
+  margin:50px 0 0;
+  font-size: 13px;
+  color: #464850;
+}
+
+.article--first {
+  margin-right: 50px;
+}
+
+.legend__table {
+  border-collapse: collapse;
+}
+
+.legend__table td {
+  text-align: left;
+  padding: 2px 4px;
 }

@@ -5,41 +5,47 @@ let showData = async () => {
   let rawResponse = await fetch(`/test/data.json`)
   let data = await rawResponse.json()
   let tableHead = columnHeads.map((columnHead) => {
-    return `<th>${columnHead}</th>`
+    return `<th class="${columnHead.toLowerCase()}">${columnHead}</th>`
   })
 
   let tableBody = data.map((dataRow) => {
-    let resultText = `${ (dataRow.total !== -1)
+    let resultText = (`${ (dataRow.total !== -1)
       ? dataRow.total
-      : "??"} `
-    resultText += `<br>(expected : ${dataRow.expected_min} ~ ${dataRow.expected_max})`
+      : " - "} `) + `<p class="result__expected">(expected : ${dataRow.expected_min} ~ ${dataRow.expected_max})</p>`
+
+    let isSuccess = true
 
     let status = ''
     if (dataRow.test_status === 'ok') {
-      status = '✅'
+      status = ico('check')
       status += (dataRow.is_known_failure === "yes")
-        ? " 😍 "
-        : "✅";
+        ? ico('umbrella')
+        : ico('check')
     }
     if (dataRow.test_status === 'ko') {
+      isSuccess  = false
       status += (dataRow.is_known_failure === "yes")
-        ? "📉"
-        : "❎❎";
+        ? ico('x') + '<br><span class="status_detail">known failure</span>'
+        : ico('x')
     }
     if (dataRow.test_status === 'skip') {
-      status = '🤔'
+      status = ico('cloud-off') + '<br><span class="status_detail">skipped</span>'
     }
 
-    return `<tr>
-  <td>${dataRow.name}</td>
+    return `<tr class="${isSuccess ? 'ok_column' : 'ko_column'}">
+  <td class="result__name">${dataRow.name}</td>
   <td>${dataRow.zone_type}</td>
-  <td>${resultText}</td>
+  <td class="result__monitor">${resultText}</td>
   <td>${status}</td>
 </tr>`
   })
   dashTable.innerHTML = `<thead>${tableHead.join('\n')}</thead><tbody>${tableBody.join('\n')}</tbody>`
   sorttable.makeSortable(dashTable)
 
+}
+
+function ico(name) {
+  return `<span class="icon-${name}"></span>`
 }
 
 showData()

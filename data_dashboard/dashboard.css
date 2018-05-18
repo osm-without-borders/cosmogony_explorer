@@ -67,7 +67,7 @@ TD {
 
 
 #volumetric-dashboard .ko_column, #volumetric-dashboard .ko_column:hover {
-  background-color: #ffdadc;
+  background-color: #f1c5d0;
 }
 
 #volumetric-dashboard tr:nth-child(odd).ko_column, #volumetric-dashboard  tr:nth-child(odd).ko_column:hover, .ko_column {

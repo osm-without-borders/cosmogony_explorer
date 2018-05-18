@@ -1,44 +1,45 @@
-fetch(`data_volumetric.json`).then((r) => r.json()).then((data) => {
-  var table = document.getElementById('volumetric-dashboard');
+const dashTable = document.getElementById('volumetric-dashboard')
+const columnHeads = ['Name', 'Zone type', 'Result', 'Status']
 
-  var col = ['name', 'zone_type', 'result', 'status']
+let showData = async () => {
+  let rawResponse = await fetch(`/test/data.json`)
+  let data = await rawResponse.json()
+  let tableHead = columnHeads.map((columnHead) => {
+    return `<th>${columnHead}</th>`
+  })
 
-  for (var i = 0; i < data.length; i++) {
-    var result_text = `${ (data[i]['total'] != -1)
-      ? data[i]['total']
+  let tableBody = data.map((dataRow) => {
+    let resultText = `${ (dataRow.total !== -1)
+      ? dataRow.total
       : "??"} `
-    result_text += `<br>(expected : ${data[i]['expected_min']} ~ ${data[i]['expected_max']})`
+    resultText += `<br>(expected : ${dataRow.expected_min} ~ ${dataRow.expected_max})`
 
-    var status = ''
-    if (data[i]['test_status'] == 'ok') {
+    let status = ''
+    if (dataRow.test_status === 'ok') {
       status = '✅'
-      status += (data[i]['is_known_failure'] == "yes")
+      status += (dataRow.is_known_failure === "yes")
         ? " 😍 "
         : "✅";
     }
-    if (data[i]['test_status'] == 'ko') {
-      status += (data[i]['is_known_failure'] == "yes")
+    if (dataRow.test_status === 'ko') {
+      status += (dataRow.is_known_failure === "yes")
         ? "📉"
         : "❎❎";
     }
-    if (data[i]['test_status'] == 'skip') {
+    if (dataRow.test_status === 'skip') {
       status = '🤔'
     }
 
-    var tr = table.insertRow(-1);
-    tr.insertCell(-1).innerHTML = data[i]['name']
-    tr.insertCell(-1).innerHTML = data[i]['zone_type']
-    var tabCell = tr.insertCell(-1);
-    tabCell.innerHTML = result_text;
-    tr.insertCell(-1).innerHTML = status
+    return `<tr>
+  <td>${dataRow.name}</td>
+  <td>${dataRow.zone_type}</td>
+  <td>${resultText}</td>
+  <td>${status}</td>
+</tr>`
+  })
+  dashTable.innerHTML = `<thead>${tableHead.join('\n')}</thead><tbody>${tableBody.join('\n')}</tbody>`
+  sorttable.makeSortable(dashTable)
 
-  }
-  var header = table.createTHead();
-  var trh = header.insertRow(0);
-  for (var i = 0; i < col.length; i++) {
-    var th = document.createElement("th");
-    th.innerHTML = col[i];
-    trh.appendChild(th);
-  }
+}
 
-})
+showData()

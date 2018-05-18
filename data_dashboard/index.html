@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Volumetric Data Dashboard</title>
+  <link href="dashboard.css" type="text/css" rel="stylesheet">
+  <link href="top_bar.css" type="text/css" rel="stylesheet">
   <meta charset='utf-8'/>
   <meta name='viewport' content='initial-scale=1,user-scalable=yes'/>
   <style>
@@ -20,7 +22,21 @@
   </style>
 </head>
 <body>
+
+<div class="top_bar">
+  <h1 class="top_bar__title">Cosmogony</h1>
+  <div class="top_bar__menu">
+    <h2 class="top_bar__menu_item top_bar__menu_item--active">Explorer</h2>
+    <h2 class="top_bar__menu_item">About</h2>
+    <h2 class="top_bar__menu_item">Data dashboard</h2>
+    <h2 class="top_bar__menu_item">Download</h2>
+    <h2 class="top_bar__menu_item">Github</h2>
+  </div>
+</div>
+
+
 <table id="volumetric-dashboard" class="sort"></table>
+<script src="sortable.js"></script>
 <script src="data_process.js"></script>
 
 </body>

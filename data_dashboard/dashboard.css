@@ -1,0 +1,31 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #232527;
+}
+
+#volumetric-dashboard {
+  border: none;
+  width: 80vw;
+}
+
+#volumetric-dashboard td, #volumetric-dashboard th {
+  border: none;
+  padding: 6px 10px;
+}
+
+#volumetric-dashboard tr th {
+  font-size: 18px;
+  font-weight: normal;
+  background: #6b8ca6;
+  color: #fff;
+}
+
+#volumetric-dashboard tr:nth-child(odd) {
+  background-color: #e9eff9;
+}
+
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
+  content: " \25B4\25BE"
+}

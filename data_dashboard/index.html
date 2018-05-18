@@ -32,13 +32,30 @@
     <br>
     <h3>Legend</h3>
     <p>
+    <div class="legend__container">
       <table class="legend__table">
-        <tr class="ok_column"><td><i class="icon-check"></i><i class="icon-check"></i></td><td>ok</td>
-        <tr class="ko_column"><td><i class="icon-x"></i><i class="icon-x"></i></td><td>ko, too few or too many zones</td>
-        <tr><td><i class="icon-x"></i> known failure</td><td>we know that somes zones are still missing in OpenStreetMap</td>
-        <tr><td><i class="icon-check"></i><i class="icon-umbrella"></i></td><td>we did think that some zones were missing in OpenStreetMap, but it's actually ok</td>
-        <tr><td><i class="icon-cloud-off"></i> skipped</td><td>the country was not found in the Cosmogony file</td>
+        <tr class="ok_column">
+          <td><i class="icon-check"></i><i class="icon-check"></i></td>
+          <td class="legend__description">ok</td>
+        </tr>
+        <tr class="ko_column">
+          <td><i class="icon-x"></i><i class="icon-x"></i></td>
+          <td class="legend__description">ko, too few or too many zones</td>
+        </tr>
+        <tr>
+          <td><i class="icon-x"></i> known failure</td>
+          <td class="legend__description">we know that somes zones are still missing in OpenStreetMap</td>
+        </tr>
+        <tr>
+          <td><i class="icon-check"></i><i class="icon-umbrella"></i></td>
+          <td class="legend__description">we did think that some zones were missing in OpenStreetMap, but it's actually ok</td>
+        </tr>
+        <tr>
+          <td><i class="icon-cloud-off"></i> skipped</td>
+          <td class="legend__description">the country was not found in the Cosmogony file</td>
+        </tr>
       </table>
+  </div>
     </p>
   </article>
 

@@ -44,6 +44,11 @@ TD {
   color: #212427;
 }
 
+.legend__container {
+  padding: 10px;
+  border: 1px solid #dee0e2;
+}
+
 #volumetric-dashboard tr:nth-child(odd), #volumetric-dashboard tr {
   transition: background-color .2s;
 }
@@ -107,4 +112,8 @@ TD {
 .legend__table td {
   text-align: left;
   padding: 2px 4px;
+}
+
+.legend__description {
+  color: #444648;
 }

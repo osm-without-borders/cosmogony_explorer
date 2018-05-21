@@ -22,6 +22,7 @@ export function initMap(center, zoom) {
 
 
   mp.on("load", () => {
+    fire('map_zoom', mp.getZoom())
     let tileLocation = ROOT_URL.replace('8080', '6767')
 
     mp.addSource('zones', {
@@ -63,6 +64,7 @@ export function initMap(center, zoom) {
     }
 
     mp.on('zoom', () => {
+      fire('map_zoom', mp.getZoom())
       updateUrl()
     })
 

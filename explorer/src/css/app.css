@@ -39,7 +39,7 @@ LI {
 }
 
 .hierarchy__current__name {
-  padding: 20px 0 0 20px;
+  padding: 90px 0 0 20px;
   font-size: 30px;
   font-weight: bold;
   font-family: serif;
@@ -90,7 +90,6 @@ LI {
   text-decoration: underline;
 }
 
-
 .hierarchy__category_title {
   padding: 20px 0 0 20px;
   font-weight: normal;
@@ -127,6 +126,14 @@ LI {
   transition: background-color .2s;
 }
 
+.layer_selector__action.layer_selector__action--active.disabled {
+  color: #841919!important;
+}
+
+.layer_selector__action.disabled {
+  color: #a2a2a2
+}
+
 .layer_selector__action:hover {
   background-color: #7996ab;
 }
@@ -156,9 +163,8 @@ LI {
   text-decoration: underline;
 }
 
-
-
 /* list & sub-list */
+
 .child {
   list-style: none;
   margin-left: 10px;
@@ -175,7 +181,6 @@ LI {
 .child__toggle:hover {
   color: #4b6278;
 }
-
 
 .child__toggle--disabled {
   color: #bdc4cc;
@@ -252,6 +257,8 @@ LI {
   font-size: 14px;
   color: #31404e;
 }
+
+/* top bar */
 
 .top_bar {
   display: flex;

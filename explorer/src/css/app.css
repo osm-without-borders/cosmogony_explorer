@@ -280,6 +280,11 @@ LI {
   padding: 32px 5px 0;
 }
 
+.top_bar__menu_item A {
+  color: #4b6278;
+  text-decoration: none;
+}
+
 .top_bar__menu_item--active {
   color: #6b8ca6;
   border-bottom: 2px solid #6b8ca6;

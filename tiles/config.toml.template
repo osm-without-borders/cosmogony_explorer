@@ -9,13 +9,13 @@ dbconn = "postgresql://cosmogony:cosmogony@postgres/cosmogony"
 predefined = "web_mercator"
 
 [[tileset]]
-name = "cosmogony"
+name = "$TILESET_NAME"
 
 [[tileset.layer]]
 name = "vector-zones"
 datasource = "cosmogony"
 # Select all attributes of table:
-table_name = "zones"
+table_name = "$TABLE_SPACE.zones"
 geometry_field = "geometry"
 geometry_type = "MULTIPOLYGON"
 srid = 3857

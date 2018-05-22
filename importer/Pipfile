@@ -11,6 +11,7 @@ verify_ssl = true
 ijson = "*"
 simplejson = "*"
 cffi = "*"
+fire = "*"
 
 
 [dev-packages]

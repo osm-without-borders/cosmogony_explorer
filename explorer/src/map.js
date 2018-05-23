@@ -25,7 +25,7 @@ export function initMap(center, zoom) {
 
     mp.addSource('zones', {
       'type': 'vector',
-      'tiles': [`${ROOT_URL}/cosmogony/{z}/{x}/{y}.pbf`]
+      'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
     })
 
     mp.addLayer({

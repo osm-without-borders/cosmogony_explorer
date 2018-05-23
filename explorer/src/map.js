@@ -22,11 +22,10 @@ export function initMap(center, zoom) {
 
   mp.on("load", () => {
     fire('map_zoom', mp.getZoom())
-    let tileLocation = ROOT_URL.replace('8080', '6767')
 
     mp.addSource('zones', {
       'type': 'vector',
-      'tiles': [`${tileLocation}/cosmogony/{z}/{x}/{y}.pbf`]
+      'tiles': [`${ROOT_URL}/cosmogony/{z}/{x}/{y}.pbf`]
     })
 
     mp.addLayer({

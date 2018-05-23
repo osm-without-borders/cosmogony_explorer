@@ -33,8 +33,7 @@ Hierarchy.fromJson = function(json) {
 
 
 Hierarchy.load = async function (id) {
-  let url = ROOT_URL.replace('8080', '8585')
-  const rawHierarchy = await fetch(`${url}/api/zones/${id}`)
+  const rawHierarchy = await fetch(`${ROOT_URL}/api/zones/${id}`)
   const hierarchyData = await rawHierarchy.json()
 
   const hierarchy = Hierarchy.fromJson(hierarchyData)
@@ -44,8 +43,7 @@ Hierarchy.load = async function (id) {
 }
 
 Hierarchy.getParents = async (id) => {
-  let url = ROOT_URL.replace('8080', '8585')
-  const rawHierarchy = await fetch(`${url}/api/zones/${id}/parents`)
+  const rawHierarchy = await fetch(`${ROOT_URL}/api/zones/${id}/parents`)
   const hierarchyData = await rawHierarchy.json()
 
   return hierarchyData.parents.map((parent) => {

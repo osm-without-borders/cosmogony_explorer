@@ -8,7 +8,12 @@ export const State = {
 }
 const urlHash = window.location.hash
 
+if (window.location.hash.split('/').length > 4) {
+  State.hierarchyId = parseInt(window.location.hash.split('/')[4])
+}
+
 export function iniUrl() {
+  
   if (urlHash && urlHash.split('/').length > 2) { /* parse uri */
     let centerParams = urlHash.replace('#', '').split('/')
     /* remove the # */
@@ -29,9 +34,6 @@ export function iniUrl() {
     }
   }
 
-  if (window.location.hash.split('/').length > 3) {
-    State.hierarchyId = parseInt(window.location.hash.split('/')[4])
-  }
 }
 
 export function update(o) {

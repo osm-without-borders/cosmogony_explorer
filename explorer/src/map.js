@@ -25,7 +25,7 @@ export function initMap(center, zoom) {
 
     mp.addSource('zones', {
       'type': 'vector',
-      'tiles': [`${ROOT_URL}/cosmogony/{z}/{x}/{y}.pbf`]
+      'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
     })
 
     mp.addLayer({
@@ -122,7 +122,7 @@ export function initMap(center, zoom) {
         return bounds.extend(coord);
       }, new mapboxgl.LngLatBounds(hierarchy.bbox[0], hierarchy.bbox[0]))
 
-      mp.fitBounds(bounds, {padding : {left: 310, right : 10, top : 10, bottom: 10}});
+      mp.fitBounds(bounds, {padding : {left: 310, right : 10, top : 90, bottom: 10}});
     })
   })
 }

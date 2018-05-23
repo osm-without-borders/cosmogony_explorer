@@ -12,6 +12,10 @@
       to type each zone according to its country. Then the resulting hierarchy is built thanks to geographical inclusion.
       An example of a full data extract can be browsed at <a href="http://cosmogony.world">http://cosmogony.world</a>.
     </p>
+    <p class="about__description">
+      For more detail about Cosmogony check the
+      <a href="https://github.com/osm-without-borders/cosmogony#cosmogony">Github Readme</a>.
+    </p>
 
     <p class="about__description">To explore and navigate fluently in the built hierarchy, Cosmogony comes along with two other tools</p>
     <ul>

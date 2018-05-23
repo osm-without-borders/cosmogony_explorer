@@ -53,9 +53,9 @@ def _import_cosmogony_to_pg(cosmogony_path):
         )
         WITH (OIDS=FALSE);
 
-        CREATE INDEX ON zones USING gist(geometry);
+        CREATE INDEX ON import.zones USING gist(geometry);
 
-        CREATE INDEX ON zones (parent);
+        CREATE INDEX ON import.zones (parent);
     """)
 
 

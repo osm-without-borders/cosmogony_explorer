@@ -28,7 +28,7 @@ simplify = true
   maxzoom = 2
   sql = """
     SELECT id, name, admin_level, zone_type, geometry
-    FROM zones
+    FROM $TABLE_SPACE.zones
     WHERE geometry && !bbox! AND admin_level <= 2
   """
   [[tileset.layer.query]]
@@ -36,7 +36,7 @@ simplify = true
   maxzoom = 20
   sql = """
     SELECT id, name, admin_level, zone_type, geometry
-    FROM zones
+    FROM $TABLE_SPACE.zones
     WHERE geometry && !bbox! 
   """
 

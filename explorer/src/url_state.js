@@ -12,8 +12,8 @@ export function iniUrl() {
   if (urlHash && urlHash.split('/').length > 2) { /* parse uri */
     let centerParams = urlHash.replace('#', '').split('/')
     /* remove the # */
-    State.center = [parseFloat(centerParams[1]), parseFloat(centerParams[2])]
-    State.zoom = parseFloat(centerParams[0])
+    State.center = [parseFloat(centerParams[2]), parseFloat(centerParams[3])]
+    State.zoom = parseFloat(centerParams[1])
     initMap(State.center, State.zoom)
   } else { /* no center given : check user location */
     if ('geolocation' in navigator) {
@@ -30,7 +30,7 @@ export function iniUrl() {
   }
 
   if (window.location.hash.split('/').length > 3) {
-    State.hierarchyId = parseInt(window.location.hash.split('/')[3])
+    State.hierarchyId = parseInt(window.location.hash.split('/')[4])
   }
 }
 

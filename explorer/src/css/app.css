@@ -9,6 +9,7 @@
 
 A, A:active, A:focus, BUTTON {
   outline: none;
+  color: #1793d8;
 }
 
 LI {
@@ -300,4 +301,138 @@ LI {
 
 .top_bar__menu_item:hover {
   color: #353b48;
+}
+
+
+#volumetric-dashboard {
+  border: none;
+  width: 80vw;
+  margin:50px 10vw 50px;
+  border-collapse: collapse;
+}
+
+TD {
+  text-align: center;
+}
+
+#volumetric-dashboard td, #volumetric-dashboard th {
+  border: none;
+  padding: 6px 10px;
+}
+
+#volumetric-dashboard tr th {
+  font-size: 18px;
+  height: 40px;
+  font-weight: normal;
+  background: #ffffff;
+  color: #212427;
+}
+
+.legend__container {
+  padding: 10px;
+  border: 1px solid #dee0e2;
+}
+
+#volumetric-dashboard tr:nth-child(odd), #volumetric-dashboard tr {
+  transition: background-color .2s;
+}
+
+tr {
+  background-color: #e0ebf5;
+}
+
+#volumetric-dashboard tr:nth-child(odd), tr:nth-child(odd) {
+  background-color: #e9eff9;
+}
+
+#volumetric-dashboard tr:nth-child(odd):hover {
+  background-color: #d0d6e0;
+}
+
+#volumetric-dashboard tr:hover {
+  background-color: #e5ebf5;
+}
+
+
+#volumetric-dashboard .ko_column, #volumetric-dashboard .ko_column:hover {
+  background-color: #f1c5d0;
+}
+
+#volumetric-dashboard tr:nth-child(odd).ko_column, #volumetric-dashboard  tr:nth-child(odd).ko_column:hover, .ko_column {
+  background-color: #f7ccd7;
+}
+
+.volumetric_dashboard__table__head {
+  border-bottom: 2px #e4e6e8 solid;
+}
+
+.status_detail, .result__expected {
+  font-size: 12px;
+  color: #2d2f36;
+}
+
+.result__name, .name {
+  text-align: left;
+}
+
+.result__monitor {
+  width: 300px;
+}
+
+.article__container {
+  margin-top: 120px;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 10vw;
+  width: 80vw;
+}
+
+.article {
+  width: 500px;
+  font-size: 14px;
+  color: #464850;
+}
+
+.article--first {
+  margin-right: 50px;
+}
+
+.legend__table {
+  border-collapse: collapse;
+}
+
+.legend__table td {
+  text-align: left;
+  padding: 2px 4px;
+}
+
+.legend__description {
+  color: #444648;
+}
+
+.about__content {
+  width: 800px;
+  margin: 120px auto;
+}
+
+.about__emphasis {
+  padding: 2px 4px;
+  background-color: #b8e3f5;
+}
+
+.about__gif {
+  width: 800px;
+}
+
+.about__description {
+  font-size: 14px;
+  margin: 15px 0;
+  line-height: 20px;
+  color: #232527;
+}
+
+.about__gif__alt {
+  color: #454749;
+  margin: 30px 0 10px;
+  font-size: 12px;
 }

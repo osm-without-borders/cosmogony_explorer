@@ -51,14 +51,14 @@
 
     <table id="volumetric-dashboard" class="sort">
       <thead>
-        <tr>
+        <tr class="volumetric_dashboard__table__head">
           <th>Name</th>
           <th>Zone type</th>
           <th>Result</th>
           <th>Status</th>
         </tr>
       </thead>
-      <tr v-for="col in testResults" v-bind:class="[col.test_status === 'ko' ? 'ok_column' : 'ko_column']">
+      <tr v-for="col in testResults" v-bind:class="[col.test_status === 'ko' && col.test_status !== 'skip'? 'ko_column' : 'ok_column']">
 
         <td>{{ col.name }}</td>
         <td>{{ col.zone_type }}</td>

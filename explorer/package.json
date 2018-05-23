@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "start" : "http-server -c-1 ./",
-    "build" : "webpack",
-    "watch" : "webpack -w"
+    "start": "http-server -c-1 ./",
+    "build": "webpack",
+    "watch": "webpack -w"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "uglifyjs-webpack-plugin": "^1.1.8",
     "vue": "^2.5.13",
     "vue-loader": "^14.1.1",
+    "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^4.0.0-beta.0"
   },

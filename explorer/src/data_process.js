@@ -2,11 +2,6 @@ const dashTable = document.getElementById('volumetric-dashboard')
 const columnHeads = ['Name', 'Zone type', 'Result', 'Status']
 
 let showData = async () => {
-  let rawResponse = await fetch(`./test/data.json`)
-  let data = await rawResponse.json()
-  let tableHead = columnHeads.map((columnHead) => {
-    return `<th class="${columnHead.toLowerCase()}">${columnHead}</th>`
-  })
 
   let tableBody = data.map((dataRow) => {
     let resultText = (`${ (dataRow.total !== -1)

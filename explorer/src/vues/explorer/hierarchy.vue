@@ -40,10 +40,10 @@
 </template>
 
 <script>
-  import Hierarchy from '../hierarchy'
+  import Hierarchy from '../../hierarchy'
   import Child from 'vue-loader!./child.vue'
   import SubHierarchy from 'vue-loader!./sub_hierarchy.vue'
-  import { State, update } from '../url_state'
+  import { State, update } from '../../url_state'
   export default {
     name: "hierarchy",
     components : {

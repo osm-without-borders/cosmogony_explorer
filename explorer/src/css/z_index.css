@@ -1,0 +1,7 @@
+.map_component {
+  z-index: 1;
+}
+
+.top_bar {
+  z-index: 2;
+}

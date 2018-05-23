@@ -20,7 +20,6 @@ export function initMap(center, zoom) {
     closeButton: false
   })
 
-
   mp.on("load", () => {
     fire('map_zoom', mp.getZoom())
     let tileLocation = ROOT_URL.replace('8080', '6767')
@@ -126,6 +125,5 @@ export function initMap(center, zoom) {
 
       mp.fitBounds(bounds, {padding : {left: 310, right : 10, top : 10, bottom: 10}});
     })
-
   })
 }

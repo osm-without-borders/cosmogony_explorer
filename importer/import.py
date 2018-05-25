@@ -5,9 +5,10 @@ import psycopg2
 import sys
 import ijson.backends.yajl2_cffi as ijson
 import simplejson as json
+import fire
 
 
-def pg_connect():
+def _pg_connect():
     dbname = environ.get('POSTGRES_DB')
     user = environ.get('POSTGRES_USER')
     password = environ.get('POSTGRES_PASSWORD')
@@ -16,16 +17,15 @@ def pg_connect():
     )
 
 
-def pg_execute(sql, params=None):
+def _pg_execute(sql, params=None):
     if params is None:
         params = {}
-    with pg_connect() as conn:
+    with _pg_connect() as conn:
         with conn.cursor() as cur:
             cur.execute(sql, params)
 
-
 SINGLE_INSERT = """
-    INSERT INTO zones
+    INSERT INTO import.zones
     VALUES (
         %(id)s, %(parent)s, %(name)s,
         %(admin_level)s, %(zone_type)s,
@@ -34,11 +34,13 @@ SINGLE_INSERT = """
     )
 """
 
-def import_cosmogony_to_pg(cosmogony_path):
-    pg_execute("""
-        DROP TABLE IF EXISTS public.zones;
 
-        CREATE TABLE IF NOT EXISTS public.zones(
+def _import_cosmogony_to_pg(cosmogony_path):
+    _pg_execute("""
+        CREATE SCHEMA IF NOT EXISTS import;
+        DROP TABLE IF EXISTS import.zones;
+
+        CREATE TABLE IF NOT EXISTS import.zones(
             id bigint NOT NULL,
             parent bigint,
             name varchar,
@@ -51,9 +53,9 @@ def import_cosmogony_to_pg(cosmogony_path):
         )
         WITH (OIDS=FALSE);
 
-        CREATE INDEX ON zones USING gist(geometry);
+        CREATE INDEX ON import.zones USING gist(geometry);
 
-        CREATE INDEX ON zones (parent);
+        CREATE INDEX ON import.zones (parent);
     """)
 
 
@@ -62,7 +64,7 @@ def import_cosmogony_to_pg(cosmogony_path):
     with open(cosmogony_path, 'rb') as f:
         zones = ijson.items(f, 'zones.item')
 
-        with pg_connect() as conn:
+        with _pg_connect() as conn:
             with conn.cursor() as cur:
                 for z in zones:
                     z['geometry'] = json.dumps(z.pop('geometry'))
@@ -71,8 +73,29 @@ def import_cosmogony_to_pg(cosmogony_path):
     print('Import done.')
 
 
+def import_data(cosmogony_path):
+    """
+    import the cosmogony data into pg
+
+    The data are imported in an 'import' schema.
+
+    The `publish` method needs to be called to make the data available
+    """
+    return _import_cosmogony_to_pg(cosmogony_path)
+
+
+def publish():
+    """
+    make the imported data available.
+
+    atomic operation that move the `import` schema to `public`.
+    """
+    _pg_execute("""
+        DROP TABLE if exists public.zones;
+
+        ALTER TABLE import.zones SET SCHEMA public;
+    """)
+
+
 if __name__ == "__main__":
-    if len(sys.argv) <= 1:
-        print('Usage: import.py [COSMOGONY_PATH]')
-    else:
-        import_cosmogony_to_pg(sys.argv[1])
+    fire.Fire()

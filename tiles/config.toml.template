@@ -9,13 +9,13 @@ dbconn = "postgresql://cosmogony:cosmogony@postgres/cosmogony"
 predefined = "web_mercator"
 
 [[tileset]]
-name = "cosmogony"
+name = "$TILESET_NAME"
 
 [[tileset.layer]]
 name = "vector-zones"
 datasource = "cosmogony"
 # Select all attributes of table:
-table_name = "zones"
+table_name = "$TABLE_SPACE.zones"
 geometry_field = "geometry"
 geometry_type = "MULTIPOLYGON"
 srid = 3857
@@ -28,7 +28,7 @@ simplify = true
   maxzoom = 2
   sql = """
     SELECT id, name, admin_level, zone_type, geometry
-    FROM zones
+    FROM $TABLE_SPACE.zones
     WHERE geometry && !bbox! AND admin_level <= 2
   """
   [[tileset.layer.query]]
@@ -36,7 +36,7 @@ simplify = true
   maxzoom = 20
   sql = """
     SELECT id, name, admin_level, zone_type, geometry
-    FROM zones
+    FROM $TABLE_SPACE.zones
     WHERE geometry && !bbox! 
   """
 

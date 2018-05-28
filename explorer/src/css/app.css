@@ -9,6 +9,7 @@
 
 A, A:active, A:focus, BUTTON {
   outline: none;
+  color: #1793d8;
 }
 
 LI {
@@ -17,6 +18,10 @@ LI {
 
 #map-container {
   height: 100vh;
+}
+
+#map-container .mapboxgl-popup {
+  top: -3px;
 }
 
 /* hierarchy */
@@ -39,10 +44,21 @@ LI {
 }
 
 .hierarchy__current__name {
-  padding: 20px 0 0 20px;
-  font-size: 30px;
+  padding: 90px 0 0 20px;
+  font-size: 26px;
   font-weight: bold;
   font-family: serif;
+}
+
+.hierarchy__current__zoom_button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: block;
+  background: none;
+  color : #d0d7e7;
+  font-size: 30px;
+  cursor: pointer;
 }
 
 .hierarchy__curent__name__level {
@@ -50,7 +66,7 @@ LI {
 }
 
 .hierarchy__current__type {
-  padding: 0 0 140px 20px;
+  padding: 0 0 20px 20px;
   letter-spacing: 1px;
   font-size: 14px;
   color: #dddce1
@@ -79,7 +95,6 @@ LI {
   text-decoration: underline;
 }
 
-
 .hierarchy__category_title {
   padding: 20px 0 0 20px;
   font-weight: normal;
@@ -102,7 +117,7 @@ LI {
 
 .layer_selector {
   position: absolute;
-  top: 0;
+  top: 80px;
   right: 0;
 }
 
@@ -114,6 +129,14 @@ LI {
   background-color: #4b6278;
   text-align: left;
   transition: background-color .2s;
+}
+
+.layer_selector__action.layer_selector__action--active.disabled {
+  color: #841919!important;
+}
+
+.layer_selector__action.disabled {
+  color: #a2a2a2
 }
 
 .layer_selector__action:hover {
@@ -145,9 +168,8 @@ LI {
   text-decoration: underline;
 }
 
-
-
 /* list & sub-list */
+
 .child {
   list-style: none;
   margin-left: 10px;
@@ -164,7 +186,6 @@ LI {
 .child__toggle:hover {
   color: #4b6278;
 }
-
 
 .child__toggle--disabled {
   color: #bdc4cc;
@@ -240,4 +261,179 @@ LI {
 .modal__admin_level {
   font-size: 14px;
   color: #31404e;
+}
+
+/* top bar */
+
+.top_bar {
+  display: flex;
+  position: absolute;
+  top:0;
+  width: 100%;
+  height: 80px;
+  background: #fff;
+}
+
+.top_bar__menu {
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
+  margin-left: 100px;
+}
+
+.top_bar__title {
+  color: #21303e;
+  padding: 18px 0 0 20px;
+}
+
+.top_bar__menu_item {
+  font-weight: bold;
+  font-size: 13px;
+  color: #4b6278;
+  padding: 32px 5px 0;
+}
+
+.top_bar__menu_item A {
+  color: #4b6278;
+  text-decoration: none;
+}
+
+.top_bar__menu_item--active {
+  color: #6b8ca6;
+  border-bottom: 2px solid #6b8ca6;
+}
+
+.top_bar__menu_item:hover {
+  color: #353b48;
+}
+
+
+#volumetric-dashboard {
+  border: none;
+  width: 80vw;
+  margin:50px 10vw 50px;
+  border-collapse: collapse;
+}
+
+TD {
+  text-align: center;
+}
+
+#volumetric-dashboard td, #volumetric-dashboard th {
+  border: none;
+  padding: 6px 10px;
+}
+
+#volumetric-dashboard tr th {
+  font-size: 18px;
+  height: 40px;
+  font-weight: normal;
+  background: #ffffff;
+  color: #212427;
+}
+
+.legend__container {
+  padding: 10px;
+  border: 1px solid #dee0e2;
+}
+
+#volumetric-dashboard tr:nth-child(odd), #volumetric-dashboard tr {
+  transition: background-color .2s;
+}
+
+tr {
+  background-color: #e0ebf5;
+}
+
+#volumetric-dashboard tr:nth-child(odd), tr:nth-child(odd) {
+  background-color: #e9eff9;
+}
+
+
+#volumetric-dashboard tr:hover {
+  filter: brightness(0.9);
+}
+
+
+#volumetric-dashboard .ko_column, #volumetric-dashboard .ko_column:hover {
+  background-color: #f1c5d0;
+}
+
+#volumetric-dashboard tr:nth-child(odd).ko_column, #volumetric-dashboard  tr:nth-child(odd).ko_column:hover, .ko_column {
+  background-color: #f7ccd7;
+}
+
+.volumetric_dashboard__table__head {
+  border-bottom: 2px #e4e6e8 solid;
+}
+
+.status_detail, .result__expected {
+  font-size: 12px;
+  color: #2d2f36;
+}
+
+.result__name, .name {
+  text-align: left;
+}
+
+.result__monitor {
+  width: 300px;
+}
+
+.article__container {
+  margin-top: 120px;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 10vw;
+  width: 80vw;
+}
+
+.article {
+  width: 500px;
+  font-size: 14px;
+  color: #464850;
+}
+
+.article--first {
+  margin-right: 50px;
+}
+
+.legend__table {
+  border-collapse: collapse;
+}
+
+.legend__table td {
+  text-align: left;
+  padding: 2px 4px;
+}
+
+.legend__description {
+  color: #444648;
+}
+
+.about__content {
+  width: 800px;
+  margin: 120px auto;
+}
+
+.about__emphasis {
+  padding: 2px 4px;
+  background-color: #b8e3f5;
+}
+
+.about__gif {
+  width: 800px;
+}
+
+.about__description {
+  font-size: 14px;
+  margin: 15px 0;
+  line-height: 20px;
+  color: #232527;
+}
+
+.about__gif__alt {
+  color: #454749;
+  margin: 30px 0 10px;
+  font-size: 12px;
 }

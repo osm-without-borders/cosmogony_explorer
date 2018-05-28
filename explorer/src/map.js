@@ -21,7 +21,17 @@ export function initMap(center, zoom) {
   })
 
   mp.on("load", () => {
+    fire('map_zoom', mp.getZoom())
+
     mp.addSource('zones', {
+      'type': 'vector',
+      'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
+    })
+
+    mp.addSource('zones-hover', {
+      // That's a trick to improve hover performance.
+      // For some reason using this duplicated source will
+      // perform better when using 'setFilter' repeatingly.
       'type': 'vector',
       'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
     })
@@ -45,7 +55,7 @@ export function initMap(center, zoom) {
     mp.addLayer({
       'id': "hover_only",
       'type': 'fill',
-      'source': 'zones',
+      'source': 'zones-hover',
       'source-layer': 'vector-zones',
       "filter": ['==', 'id', -1],
       'paint': {
@@ -60,6 +70,7 @@ export function initMap(center, zoom) {
     }
 
     mp.on('zoom', () => {
+      fire('map_zoom', mp.getZoom())
       updateUrl()
     })
 
@@ -112,6 +123,14 @@ export function initMap(center, zoom) {
         hoverTimeout = null;
         mp.setFilter('hover_only', ['==', 'id', id])
       }, 40)
+    })
+
+    listen('zoom_to', (hierarchy) => {
+      let bounds = hierarchy.bbox.reduce(function(bounds, coord) {
+        return bounds.extend(coord);
+      }, new mapboxgl.LngLatBounds(hierarchy.bbox[0], hierarchy.bbox[0]))
+
+      mp.fitBounds(bounds, {padding : {left: 320, right : 20, top : 100, bottom: 20}});
     })
   })
 }

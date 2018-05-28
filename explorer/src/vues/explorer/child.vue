@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import Hierarchy from '../hierarchy'
+  import Hierarchy from '../../hierarchy'
   export default {
     name: "Child",
     props: [

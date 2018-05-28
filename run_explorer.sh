@@ -20,4 +20,4 @@ docker-compose exec cosmogony-tiles /usr/bin/t_rex generate -c /config_generate.
 docker-compose run cosmogony-importer ./import.py publish
 docker-compose exec cosmogony-tiles /publish_tiles.sh
 
-sensible-browser "http://localhost:8585/#2.5/32/0"
+sensible-browser "http://localhost:8585/#/2.5/32/0"

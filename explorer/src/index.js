@@ -1,15 +1,30 @@
-import map from './map'
-import url_state  from './url_state'
-
 import Vue from 'vue'
-import App from 'vue-loader!./vues/app.vue'
-import listen from "./listen";
+import VueRouter from 'vue-router'
+import Explorer from 'vue-loader!./vues/routes/explorer.vue'
+import About from 'vue-loader!./vues/routes/about.vue'
+import DataDashBoard from 'vue-loader!./vues/routes/data_dashboard.vue'
 
-export const ROOT_URL = location.protocol+'//'+location.host;
+import topBar from 'vue-loader!./vues/common/top_bar.vue'
+export const ROOT_URL = location.protocol+'//'+location.host
+
+require('../src/listen')
+
+
+const routes = [
+  { path: '/about', component: About },
+  { path: '/data_dashboard', component: DataDashBoard },
+  { path: '/*', component: Explorer }
+]
+
+const router = new VueRouter({
+  routes
+})
+
+Vue.use(VueRouter)
 
 new Vue({
   el: '#root',
-  template: '<App/>',
-  components: { App }
+  template: '<div><topBar/><router-view></router-view></div>',
+  components: { topBar },
+  router
 })
-

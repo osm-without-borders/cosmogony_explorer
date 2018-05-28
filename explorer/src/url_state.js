@@ -14,7 +14,7 @@ if (window.location.hash.split('/').length > 4) {
 
 export function iniUrl() {
   
-  if (urlHash && urlHash.split('/').length > 2) { /* parse uri */
+  if (urlHash && urlHash.split('/').length > 3) { /* parse uri */
     let centerParams = urlHash.replace('#', '').split('/')
     /* remove the # */
     State.center = [parseFloat(centerParams[2]), parseFloat(centerParams[3])]
@@ -38,7 +38,7 @@ export function iniUrl() {
 
 export function update(o) {
   Object.assign(State, o)
-  let urlhash = `#${State.zoom}/${State.center[0]}/${State.center[1]}${State.hierarchyId ? `/${State.hierarchyId}` : ''}`
+  let urlhash = `#/${State.zoom}/${State.center[0]}/${State.center[1]}${State.hierarchyId ? `/${State.hierarchyId}` : ''}`
   if(history && typeof history.replaceState === 'undefined') {
     location.replace(urlhash)
   } else {

@@ -28,6 +28,14 @@ export function initMap(center, zoom) {
       'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
     })
 
+    mp.addSource('zones-hover', {
+      // That's a trick to improve hover performance.
+      // For some reason using this duplicated source will
+      // perform better when using 'setFilter' repeatingly.
+      'type': 'vector',
+      'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
+    })
+
     mp.addLayer({
       'id': "all",
       'type': 'fill',
@@ -47,7 +55,7 @@ export function initMap(center, zoom) {
     mp.addLayer({
       'id': "hover_only",
       'type': 'fill',
-      'source': 'zones',
+      'source': 'zones-hover',
       'source-layer': 'vector-zones',
       "filter": ['==', 'id', -1],
       'paint': {
@@ -122,7 +130,7 @@ export function initMap(center, zoom) {
         return bounds.extend(coord);
       }, new mapboxgl.LngLatBounds(hierarchy.bbox[0], hierarchy.bbox[0]))
 
-      mp.fitBounds(bounds, {padding : {left: 310, right : 10, top : 90, bottom: 10}});
+      mp.fitBounds(bounds, {padding : {left: 320, right : 20, top : 100, bottom: 20}});
     })
   })
 }

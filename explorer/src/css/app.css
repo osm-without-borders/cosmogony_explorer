@@ -20,6 +20,10 @@ LI {
   height: 100vh;
 }
 
+#map-container .mapboxgl-popup {
+  top: -3px;
+}
+
 /* hierarchy */
 
 .hierarchy {
@@ -41,7 +45,7 @@ LI {
 
 .hierarchy__current__name {
   padding: 90px 0 0 20px;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: bold;
   font-family: serif;
 }
@@ -345,12 +349,9 @@ tr {
   background-color: #e9eff9;
 }
 
-#volumetric-dashboard tr:nth-child(odd):hover {
-  background-color: #d0d6e0;
-}
 
 #volumetric-dashboard tr:hover {
-  background-color: #e5ebf5;
+  filter: brightness(0.9);
 }
 
 

@@ -16,4 +16,4 @@ docker-compose run -v "`dirname $(realpath $1)`:/tmp/volume" cosmogony-importer 
 echo "Generating tiles..."
 docker-compose exec cosmogony-tiles /usr/bin/t_rex generate -c /config.toml --minzoom 0 --maxzoom 6 --overwrite true --progress true
 
-sensible-browser "http://localhost:8585/#2.5/32/0"
+sensible-browser "http://localhost:8585/#/2.5/32/0"

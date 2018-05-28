@@ -2,8 +2,8 @@ import { initMap } from './map'
 
 /* init default parameters */
 export const State = {
-  center : [0,0],
-  zoom : 6,
+  center : [0,50],
+  zoom : 4,
   hierarchyId : null
 }
 const urlHash = window.location.hash

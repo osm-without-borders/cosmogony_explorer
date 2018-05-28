@@ -38,7 +38,12 @@ export function iniUrl() {
 
 export function update(o) {
   Object.assign(State, o)
-  window.location.hash = `${State.zoom}/${State.center[0]}/${State.center[1]}${State.hierarchyId ? `/${State.hierarchyId}` : ''}`
+  let urlhash = `#${State.zoom}/${State.center[0]}/${State.center[1]}${State.hierarchyId ? `/${State.hierarchyId}` : ''}`
+  if(history && typeof history.replaceState === 'undefined') {
+    location.replace(urlhash)
+  } else {
+    history.replaceState(null, null, urlhash);
+  }
 }
 
 window.onpopstate = function () {

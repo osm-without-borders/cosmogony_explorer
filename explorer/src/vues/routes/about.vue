@@ -3,8 +3,8 @@
     <p class="about__description">
       This is home to Cosmogony, a project that aims at providing an efficient tool to quickly use and update worldwide geographical regions.
       It returns geographical zones with a structured hierarchy to easily know that :<br>
-      <a href="https://www.openstreetmap.org/relation/7444">Paris</a> is a <span class="about__emphasis">city</span> > in the
-      <span class="about__emphasis">state</span> <a href="https://www.openstreetmap.org/relation/8649">Île-de-France</a> > in the <span class="about__emphasis">country</span>
+      <a href="https://www.openstreetmap.org/relation/7444">Paris</a> is a <span class="about__emphasis">city</span> in the
+      <span class="about__emphasis">state</span> <a href="https://www.openstreetmap.org/relation/8649">Île-de-France</a> in the <span class="about__emphasis">country</span>
       <a href="https://www.openstreetmap.org/relation/2202162">France</a>.
     </p>
     <p class="about__description">The architecture of Cosmogony is based on <a href="https://www.openstreetmap.org">OpenStreetMap data</a>

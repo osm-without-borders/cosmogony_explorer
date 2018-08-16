@@ -60,7 +60,6 @@
     },
     created : async function () {
       listen('update_hierarchy', async (hierarchyId) => {
-        console.log('>',hierarchyId)
         this.hierarchy = await  Hierarchy.load(hierarchyId)
         pushState({hierarchyId : hierarchyId})
         fire('select_hierarchy', hierarchyId)

@@ -57,11 +57,11 @@ export function pushState(o) {
 }
 
 window.onpopstate = function () {
-  /* update only for hierarchy navigation */
   if(window.location.hash.split('/').length > 3) {
-    let tempHierarchyId = parseInt(window.location.hash.split('/')[3])
+    let tempHierarchyId = parseInt(window.location.hash.split('/')[4])
+    /* update only for hierarchy navigation */
     if(tempHierarchyId !== State.hierarchyId) {
-    //  fire('update_hierarchy', tempHierarchyId)
+      fire('update_hierarchy', tempHierarchyId)
     }
   }
 }

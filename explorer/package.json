@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "start": "http-server -c-1 ./",
+    "start": "node ./express/index.js",
     "build": "webpack",
     "watch": "webpack -w"
   },
@@ -24,8 +24,13 @@
     "uglifyjs-webpack-plugin": "^1.1.8",
     "vue": "^2.5.13",
     "vue-loader": "^14.1.1",
+    "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^4.0.0-beta.0",
     "webpack-cli": "^2.0.4"
+  },
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "expressjs": "^1.0.1"
   }
 }

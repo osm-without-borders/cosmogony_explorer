@@ -1,5 +1,5 @@
 import { ROOT_URL } from './index';
-import { State, update } from './url_state'
+import { State, updateState } from './url_state'
 
 export function initMap(center, zoom) {
   const mp = new mapboxgl.Map({
@@ -13,7 +13,7 @@ export function initMap(center, zoom) {
   function updateUrl() {
     const zoom = mp.getZoom()
     const center = mp.getCenter() // #4/43.49/7.93
-    update({zoom:zoom.toFixed(2), center:[center.lng.toFixed(2), center.lat.toFixed(2)]})
+    updateState({zoom:zoom.toFixed(2), center:[center.lng.toFixed(2), center.lat.toFixed(2)]})
   }
 
   const popup = new mapboxgl.Popup({

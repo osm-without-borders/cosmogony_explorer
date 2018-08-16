@@ -43,7 +43,7 @@
   import Hierarchy from '../../hierarchy'
   import Child from 'vue-loader!./child.vue'
   import SubHierarchy from 'vue-loader!./sub_hierarchy.vue'
-  import { State, update } from '../../url_state'
+  import { State, pushState } from '../../url_state'
   export default {
     name: "hierarchy",
     components : {
@@ -61,7 +61,7 @@
     created : async function () {
       listen('update_hierarchy', async (hierarchyId) => {
         this.hierarchy = await  Hierarchy.load(hierarchyId)
-        update({hierarchyId : hierarchyId})
+        pushState({hierarchyId : hierarchyId})
         fire('select_hierarchy', hierarchyId)
       })
       listen('filter', () => {

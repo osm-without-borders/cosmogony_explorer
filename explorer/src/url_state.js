@@ -36,7 +36,7 @@ export function iniUrl() {
 
 }
 
-export function update(o) {
+export function updateState(o) {
   Object.assign(State, o)
   let urlhash = `#/${State.zoom}/${State.center[0]}/${State.center[1]}${State.hierarchyId ? `/${State.hierarchyId}` : ''}`
   if(history && typeof history.replaceState === 'undefined') {
@@ -46,12 +46,22 @@ export function update(o) {
   }
 }
 
+export function pushState(o) {
+  Object.assign(State, o)
+  let urlhash = `#/${State.zoom}/${State.center[0]}/${State.center[1]}${State.hierarchyId ? `/${State.hierarchyId}` : ''}`
+  if(history && typeof history.pushState === 'undefined') {
+    location.replace(urlhash)
+  } else {
+    history.pushState(null, null, urlhash);
+  }
+}
+
 window.onpopstate = function () {
   /* update only for hierarchy navigation */
   if(window.location.hash.split('/').length > 3) {
     let tempHierarchyId = parseInt(window.location.hash.split('/')[3])
     if(tempHierarchyId !== State.hierarchyId) {
-      fire('update_hierarchy', tempHierarchyId)
+    //  fire('update_hierarchy', tempHierarchyId)
     }
   }
 }

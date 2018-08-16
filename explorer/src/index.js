@@ -5,7 +5,8 @@ import About from 'vue-loader!./vues/routes/about.vue'
 import DataDashBoard from 'vue-loader!./vues/routes/data_dashboard.vue'
 
 import topBar from 'vue-loader!./vues/common/top_bar.vue'
-export const ROOT_URL = location.protocol+'//'+location.host
+export const ROOT_URL = location.protocol+'//'+location.host.replace('8080', '8585')
+console.log(ROOT_URL)
 
 require('../src/listen')
 

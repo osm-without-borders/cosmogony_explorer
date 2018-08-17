@@ -59,9 +59,11 @@
       }
     },
     created : async function () {
-      listen('update_hierarchy', async (hierarchyId) => {
+      listen('update_hierarchy', async (hierarchyId, options = {}) => {
         this.hierarchy = await  Hierarchy.load(hierarchyId)
-        pushState({hierarchyId : hierarchyId})
+        if(!options.skipPushState) {
+          pushState({hierarchyId : hierarchyId})
+        }
         fire('select_hierarchy', hierarchyId)
       })
       listen('filter', () => {

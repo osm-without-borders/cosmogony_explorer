@@ -33,7 +33,6 @@ export function iniUrl() {
       initMap(State.center, State.zoom)
     }
   }
-
 }
 
 export function updateState(o) {
@@ -44,8 +43,8 @@ export function updateState(o) {
   } else {
     history.replaceState(null, null, urlhash);
   }
-}
 
+}
 export function pushState(o) {
   Object.assign(State, o)
   let urlhash = `#/${State.zoom}/${State.center[0]}/${State.center[1]}${State.hierarchyId ? `/${State.hierarchyId}` : ''}`
@@ -60,8 +59,6 @@ window.onpopstate = function () {
   if(window.location.hash.split('/').length > 3) {
     let tempHierarchyId = parseInt(window.location.hash.split('/')[4])
     /* update only for hierarchy navigation */
-    if(tempHierarchyId !== State.hierarchyId) {
-      fire('update_hierarchy', tempHierarchyId)
-    }
+    fire('update_hierarchy', tempHierarchyId, {skipPushState : true})
   }
 }

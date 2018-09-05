@@ -113,6 +113,10 @@ export function initMap(center, zoom) {
       mp.setFilter('all', ['==', 'id', id])
     })
 
+    listen('fit_map', (zoom, lngLat) => {
+      mp.jumpTo({zoom: zoom, center : lngLat})
+    })
+
     let hoverTimeout = null;
 
     listen('hover_hierarchy', (id) => {

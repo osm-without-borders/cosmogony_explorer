@@ -4,7 +4,7 @@ import { State, update } from './url_state'
 export function initMap(center, zoom) {
   const mp = new mapboxgl.Map({
     container: 'map-container',
-    style: 'https://openmaptiles.github.io/positron-gl-style/style-cdn.json',
+    style: 'https://maps.tilehosting.com/styles/positron/style.json?key=dcCQFarAif6ie2xrgCEF',
     zoom: zoom,
     center: center,
     hash: false

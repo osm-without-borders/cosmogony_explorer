@@ -10,9 +10,6 @@ app.set('views', `${__dirname}/vues`)
 app.use(express.static(path.resolve(`${__dirname}/../src`)))
 app.use(express.static(path.resolve(`${__dirname}/../dist`)))
 
-app.get('/zone/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'))})
-
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'))
 })

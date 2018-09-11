@@ -110,6 +110,8 @@ export function initMap(center, zoom) {
     })
 
     listen('select_hierarchy', (id) => {
+      console.log(id)
+      mp.setFilter('hover_only', ['==', 'id', -1])
       mp.setFilter('all', ['==', 'id', id])
     })
 

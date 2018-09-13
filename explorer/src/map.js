@@ -31,6 +31,14 @@ export function initMap(center, zoom) {
       'type': 'vector',
       'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
     })
+    mp.addSource('zones-hover', {
+      // That's a trick to improve hover performance.
+      // For some reason using this duplicated source will
+      // perform better when using 'setFilter' repeatingly.
+      'type': 'vector',
+      'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
+    })
+
 
     mp.addLayer({
       'id': "all",
@@ -43,12 +51,23 @@ export function initMap(center, zoom) {
       "filter": ["==", "admin_level", 2],
       'paint': {
         'fill-color': '#5fc7ff',
-        'fill-outline-color': ["case",
-          ["boolean", ["feature-state", "hover"], false],
-          '#ab2914',
-          '#5fc7ff'
-        ],
         'fill-opacity': 0.44
+      }
+    })
+
+    mp.addLayer({
+      'id': "hover_only",
+      'type': 'fill',
+      'source': 'zones-hover',
+      'source-layer': 'vector-zones',
+      'paint': {
+        'fill-color': '#5fc7ff',
+        'fill-outline-color': '#ab2914',
+        'fill-opacity': ["case",
+          ["boolean", ["feature-state", "hover"], false],
+          .4,
+          0
+        ],
       }
     })
 
@@ -80,7 +99,7 @@ export function initMap(center, zoom) {
     mp.on('mouseleave', "all", function () {
       mp.getCanvas().style.cursor = ''
       setTimeout(() => {
-        mp.setFeatureState({source: 'zones', sourceLayer : 'vector-zones', id: currentHoverAdminId}, { hover: false})
+        mp.setFeatureState({source: 'zones-hover', sourceLayer : 'vector-zones', id: currentHoverAdminId}, {hover: false})
       }, 30)
       popup.remove()
     })
@@ -116,10 +135,10 @@ export function initMap(center, zoom) {
         hoverTimeout = setTimeout(function(){
           available = true
           if(currentHoverAdminId) {
-            mp.setFeatureState({source: 'zones', sourceLayer : 'vector-zones', id: currentHoverAdminId}, { hover: false})
+            mp.setFeatureState({source: 'zones-hover', sourceLayer : 'vector-zones', id: currentHoverAdminId}, { hover: false})
           }
           currentHoverAdminId = id
-          mp.setFeatureState({source: 'zones', sourceLayer : 'vector-zones', id: currentHoverAdminId}, { hover: true})
+          mp.setFeatureState({source: 'zones-hover', sourceLayer : 'vector-zones', id: currentHoverAdminId}, { hover: true})
         }, 30)
       }
     })

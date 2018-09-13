@@ -92,6 +92,8 @@ export function initMap(center, zoom) {
 
     mp.on('mouseleave', "all", function () {
       mp.getCanvas().style.cursor = ''
+      mp.setFilter('hover_only', ['==', 'id', 111])
+      console.log('leave')
       popup.remove()
     })
 
@@ -111,7 +113,6 @@ export function initMap(center, zoom) {
 
     listen('select_hierarchy', (id) => {
       console.log(id)
-      mp.setFilter('hover_only', ['==', 'id', -1])
       mp.setFilter('all', ['==', 'id', id])
     })
 

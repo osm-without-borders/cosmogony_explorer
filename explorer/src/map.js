@@ -2,6 +2,10 @@ import { ROOT_URL } from './index';
 import { State, updateState } from './url_state'
 
 export function initMap(center, zoom) {
+
+  let available = true
+  let currentHoverAdminId = null
+
   const mp = new mapboxgl.Map({
     container: 'map-container',
     style: 'https://openmaptiles.github.io/positron-gl-style/style-cdn.json',
@@ -28,14 +32,6 @@ export function initMap(center, zoom) {
       'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
     })
 
-    mp.addSource('zones-hover', {
-      // That's a trick to improve hover performance.
-      // For some reason using this duplicated source will
-      // perform better when using 'setFilter' repeatingly.
-      'type': 'vector',
-      'tiles': [`${ROOT_URL}/tiles/cosmogony/{z}/{x}/{y}.pbf`]
-    })
-
     mp.addLayer({
       'id': "all",
       'type': 'fill',
@@ -47,20 +43,11 @@ export function initMap(center, zoom) {
       "filter": ["==", "admin_level", 2],
       'paint': {
         'fill-color': '#5fc7ff',
-        'fill-outline-color': "#206dab",
-        'fill-opacity': 0.44
-      }
-    })
-
-    mp.addLayer({
-      'id': "hover_only",
-      'type': 'fill',
-      'source': 'zones-hover',
-      'source-layer': 'vector-zones',
-      "filter": ['==', 'id', -1],
-      'paint': {
-        'fill-color': '#5fc7ff',
-        'fill-outline-color': "red",
+        'fill-outline-color': ["case",
+          ["boolean", ["feature-state", "hover"], false],
+          '#ab2914',
+          '#5fc7ff'
+        ],
         'fill-opacity': 0.44
       }
     })
@@ -92,8 +79,9 @@ export function initMap(center, zoom) {
 
     mp.on('mouseleave', "all", function () {
       mp.getCanvas().style.cursor = ''
-      mp.setFilter('hover_only', ['==', 'id', 111])
-      console.log('leave')
+      setTimeout(() => {
+        mp.setFeatureState({source: 'zones', sourceLayer : 'vector-zones', id: currentHoverAdminId}, { hover: false})
+      }, 30)
       popup.remove()
     })
 
@@ -108,11 +96,9 @@ export function initMap(center, zoom) {
 
     listen('filter', (type) => {
       mp.setFilter('all', ['==', 'zone_type', type])
-      mp.setFilter('hover_only', ['==', 'id', -1]) /* clean hover selection */
     })
 
     listen('select_hierarchy', (id) => {
-      console.log(id)
       mp.setFilter('all', ['==', 'id', id])
     })
 
@@ -123,20 +109,25 @@ export function initMap(center, zoom) {
     let hoverTimeout = null;
 
     listen('hover_hierarchy', (id) => {
-      if(hoverTimeout){
-        clearTimeout(hoverTimeout);
+
+      if(available && id !== currentHoverAdminId) {
+        available = false
+        /* throttling */
+        hoverTimeout = setTimeout(function(){
+          available = true
+          if(currentHoverAdminId) {
+            mp.setFeatureState({source: 'zones', sourceLayer : 'vector-zones', id: currentHoverAdminId}, { hover: false})
+          }
+          currentHoverAdminId = id
+          mp.setFeatureState({source: 'zones', sourceLayer : 'vector-zones', id: currentHoverAdminId}, { hover: true})
+        }, 30)
       }
-      hoverTimeout = setTimeout(function(){
-        hoverTimeout = null;
-        mp.setFilter('hover_only', ['==', 'id', id])
-      }, 40)
     })
 
     listen('zoom_to', (hierarchy) => {
       let bounds = hierarchy.bbox.reduce(function(bounds, coord) {
         return bounds.extend(coord);
       }, new mapboxgl.LngLatBounds(hierarchy.bbox[0], hierarchy.bbox[0]))
-
       mp.fitBounds(bounds, {padding : {left: 320, right : 20, top : 100, bottom: 20}});
     })
   })

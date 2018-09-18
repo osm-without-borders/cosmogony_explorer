@@ -62,7 +62,7 @@ export function initMap(center, zoom) {
       'source-layer': 'vector-zones',
       'paint': {
         'fill-color': '#5fc7ff',
-        'fill-outline-color': '#ab2914',
+        'fill-outline-color': 'red',
         'fill-opacity': ["case",
           ["boolean", ["feature-state", "hover"], false],
           .4,
@@ -100,6 +100,7 @@ export function initMap(center, zoom) {
       mp.getCanvas().style.cursor = ''
       setTimeout(() => {
         mp.setFeatureState({source: 'zones-hover', sourceLayer : 'vector-zones', id: currentHoverAdminId}, {hover: false})
+        currentHoverAdminId = null
       }, 30)
       popup.remove()
     })

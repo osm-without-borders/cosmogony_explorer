@@ -51,6 +51,7 @@ export function initMap(center, zoom) {
       "filter": ["==", "admin_level", 2],
       'paint': {
         'fill-color': '#5fc7ff',
+        'fill-outline-color': "#206dab",
         'fill-opacity': 0.44
       }
     })

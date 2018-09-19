@@ -49,13 +49,11 @@ Hierarchy.getParents = async (id) => {
   return hierarchyData.parents.map((parent) => {
     return new Hierarchy(parent.id, parent.name, parent.admin_level, parent.zone_type)
   })
-
 }
 
 Hierarchy.getChildren = async (id) => {
   const hierarchy = await Hierarchy.load(id)
   return hierarchy.children
 }
-
 
 export default Hierarchy

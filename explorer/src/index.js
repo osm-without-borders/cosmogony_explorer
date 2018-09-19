@@ -5,10 +5,9 @@ import About from 'vue-loader!./vues/routes/about.vue'
 import DataDashBoard from 'vue-loader!./vues/routes/data_dashboard.vue'
 
 import topBar from 'vue-loader!./vues/common/top_bar.vue'
-export const ROOT_URL = location.protocol+'//'+location.host
+export const ROOT_URL = `${location.protocol}//${location.host}`
 
 require('../src/listen')
-
 
 const routes = [
   { path: '/about', component: About },

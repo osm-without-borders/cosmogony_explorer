@@ -4,7 +4,7 @@
     <button v-else="" class="child__toggle child__toggle--disabled icon-stack"></button>
     <span class="child__name" v-on:click="highlightHierarchy()" v-on:mouseover="hover(hierarchy.id)">{{ hierarchy.name }}</span>
     <ul class="child__items">
-      <img v-if="wait" class="hierarchy__loader" src="/src/images/loader.gif"/>
+      <img v-if="wait" class="hierarchy__loader" src="/images/loader.gif"/>
       <Child v-for="child in children" v-bind:hierarchy="child" v-bind:key="child.id"/>
     </ul>
   </li>

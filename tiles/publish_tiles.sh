@@ -8,7 +8,9 @@ serve_dir="$base_dir/cosmogony"
 backup_dir="$base_dir/backup"
 
 if [ -d $serve_dir ]; then
-    rm -r $backup_dir
+    if [ -d $backup_dir ]; then
+        rm -r $backup_dir
+    fi
     mv $serve_dir $backup_dir
 fi
 

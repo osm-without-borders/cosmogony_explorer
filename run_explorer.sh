@@ -7,7 +7,7 @@ if [ -z  "$1" ]; then
 	exit 1
 fi
 
-docker-compose up -d
+docker-compose up -d --build
 
 echo "Import to Postgis will start..."
 sleep 10 # Waiting for postgres

@@ -96,13 +96,21 @@
 </template>
 
 <script>
-  import testResults from '../../data/test_results'
+
+  import axios from "axios";
   export default {
     name: "data_dashboard",
-    data : function () {
+    data () {
       return {
-        testResults
+        testResults: null
       }
-    }
+    },
+    mounted() {
+        axios({ method: "GET", "url": "/data/test_results.json" }).then(result => {
+            this.testResults = result.data;
+        }, error => {
+            console.error(error);
+        });
+    },
   }
 </script>

@@ -30,6 +30,7 @@
     "webpack-cli": "^2.0.4"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "ejs": "^2.6.1",
     "expressjs": "^1.0.1"
   }

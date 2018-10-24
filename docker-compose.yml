@@ -1,36 +1,39 @@
 version: "3"
+
 volumes:
   pgdata:
+  data-dashboard:
+
 services:
   postgres:
     image: "openmaptiles/postgis:2.9"
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - 127.0.0.1:5432:5432
+      - 5432
     env_file: .env
-  cosmogony-importer:
-    build: ./importer
-    env_file: .env
-    depends_on:
-      - postgres
-  cosmogony-tiles:
-    build: ./tiles
+
+  tiles:
+    image: osmwithoutborders/cosmogony-tiles
     env_file: .env
     depends_on:
       - postgres
     ports:
-      - 127.0.0.1:6767:6767
-  cosmogony-api:
-    build: ./api
+      - 6767
+
+  api:
+    image: osmwithoutborders/cosmogony-api
     env_file: .env
     depends_on:
       - postgres
     ports:
-      - 127.0.0.1:8000:8000
+      - 8000
+
   explorer:
-    build: ./explorer
+    image: osmwithoutborders/cosmogony-explorer
     depends_on:
-      - cosmogony-api
+      - api
     ports:
-      - 8585:80
+      - 8585:80  # TODO remove this
+    volumes:
+      - data-dashboard:/mnt/data_dashboard

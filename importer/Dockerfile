@@ -11,5 +11,3 @@ RUN pip install pipenv
 RUN pipenv install --system --deploy
 
 RUN chmod +x import.py
-
-CMD sleep infinity

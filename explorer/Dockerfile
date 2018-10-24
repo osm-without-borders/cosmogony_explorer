@@ -7,8 +7,6 @@ RUN cd /tmp/cosmo_build &&\
   node ./node_modules/webpack/bin/webpack --mode='production' && \
   rm -rf ./node_modules
 
-
-
 FROM nginx:alpine
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /tmp/cosmo_build/ /usr/share/nginx/html/

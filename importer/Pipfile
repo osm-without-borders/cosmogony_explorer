@@ -12,10 +12,13 @@ ijson = "*"
 simplejson = "*"
 cffi = "*"
 fire = "*"
+retrying = "*"
+
 
 [requires]
 
 python_version = "3.6"
+
 
 [dev-packages]
 

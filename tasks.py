@@ -15,7 +15,6 @@ def pop_stack(ctx, build_dockers=False):
     if build_dockers:
         ctx.run("docker-compose build --pull")
     ctx.run("docker-compose up -d")
-    ctx.run("sleep 5") # TODO do better to wait for pg
 
 def _run_container(ctx, container_name, job):
     main_docker_files = _get_docker_compose()

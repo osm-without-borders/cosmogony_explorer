@@ -6,8 +6,11 @@ import sys
 import ijson.backends.yajl2_cffi as ijson
 import simplejson as json
 import fire
+from retrying import retry
 
 
+# we wait a bit for postgres to be ready since if used with docker, so docker might take a while to start
+@retry(stop_max_delay=10000, retry_on_exception=psycopg2.OperationalError)
 def _pg_connect():
     dbname = environ.get('POSTGRES_DB')
     user = environ.get('POSTGRES_USER')

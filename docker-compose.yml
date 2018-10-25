@@ -34,6 +34,6 @@ services:
     depends_on:
       - api
     ports:
-      - 8585:80  # TODO remove this
+      - 80
     volumes:
       - data-dashboard:/mnt/data_dashboard

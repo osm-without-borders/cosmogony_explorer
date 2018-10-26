@@ -31,3 +31,12 @@ By default it will load a file named `cosmogony.json` in this directory. You can
 ```bash
 PATH_TO_COSMOGONY_DIR=./my_data_dir pipenv run inv -e run-local --cosmogony-file-name=cosmo_lux.json
 ```
+
+## Development
+
+If you want to change stuff in the repository, you need to build custom images.
+To do this, you just need to add the `--build-dockers` argument to the `invoke` commands:
+
+```bash
+PATH_TO_COSMOGONY_DIR=./my_data_dir pipenv run inv -e run-local --cosmogony-file-name=cosmo_lux.json --build-dockers
+```

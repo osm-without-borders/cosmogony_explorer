@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 
 @task()
 def run_local(ctx, cosmogony_file_name="cosmogony.json", build_dockers=False):
-    pop_stack(ctx)
+    pop_stack(ctx, build_dockers)
     run_explorer(ctx, cosmogony_file_name)
     ctx.run("sensible-browser 'http://localhost:8585/#/2.5/32/0'")
 

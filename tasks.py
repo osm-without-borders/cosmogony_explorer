@@ -9,13 +9,19 @@ logging.basicConfig(level=logging.INFO)
 def run_local(ctx, cosmogony_file_name="cosmogony.json", build_dockers=False):
     pop_stack(ctx, build_dockers)
     run_explorer(ctx, cosmogony_file_name)
-    ctx.run("sensible-browser 'http://localhost:8585/#/2.5/32/0'")
+    open_browser(ctx)
+
+@task()
+def open_browser(ctx):
+    explorer_ip = ctx.run("docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker-compose ps -q explorer)")
+    ip = explorer_ip.stdout.split('\n')[0]
+    ctx.run(f"sensible-browser 'http://{ip}/#/2.5/32/0'")
 
 
 @task()
 def pop_stack(ctx, build_dockers=False):
     if build_dockers:
-        ctx.run("docker-compose build --pull")
+        ctx.run("docker-compose build --pull", env={"COMPOSE_FILE": 'docker-compose.build.yml'})
     ctx.run("docker-compose up -d")
 
 

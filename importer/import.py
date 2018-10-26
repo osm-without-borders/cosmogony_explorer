@@ -8,15 +8,17 @@ import simplejson as json
 import fire
 from retrying import retry
 
+def retry_if_db_error(exception):
+    return isinstance(exception, psycopg2.OperationalError)
 
 # we wait a bit for postgres to be ready since if used with docker, so docker might take a while to start
-@retry(stop_max_delay=10000, retry_on_exception=psycopg2.OperationalError)
+@retry(stop_max_delay=10000, retry_on_exception=retry_if_db_error)
 def _pg_connect():
-    dbname = environ.get('POSTGRES_DB')
-    user = environ.get('POSTGRES_USER')
-    password = environ.get('POSTGRES_PASSWORD')
+    dbname = environ.get("POSTGRES_DB")
+    user = environ.get("POSTGRES_USER")
+    password = environ.get("POSTGRES_PASSWORD")
     return psycopg2.connect(
-        f'host=postgres dbname={dbname} user={user} password={password}'
+        f"host=postgres dbname={dbname} user={user} password={password}"
     )
 
 
@@ -26,6 +28,7 @@ def _pg_execute(sql, params=None):
     with _pg_connect() as conn:
         with conn.cursor() as cur:
             cur.execute(sql, params)
+
 
 SINGLE_INSERT = """
     INSERT INTO import.zones
@@ -39,7 +42,8 @@ SINGLE_INSERT = """
 
 
 def _import_cosmogony_to_pg(cosmogony_path):
-    _pg_execute("""
+    _pg_execute(
+        """
         CREATE SCHEMA IF NOT EXISTS import;
         DROP TABLE IF EXISTS import.zones;
 
@@ -59,21 +63,21 @@ def _import_cosmogony_to_pg(cosmogony_path):
         CREATE INDEX ON import.zones USING gist(geometry);
 
         CREATE INDEX ON import.zones (parent);
-    """)
+    """
+    )
 
+    print("Importing cosmogony to pg...")
 
-    print('Importing cosmogony to pg...')
-    
-    with open(cosmogony_path, 'rb') as f:
-        zones = ijson.items(f, 'zones.item')
+    with open(cosmogony_path, "rb") as f:
+        zones = ijson.items(f, "zones.item")
 
         with _pg_connect() as conn:
             with conn.cursor() as cur:
                 for z in zones:
-                    z['geometry'] = json.dumps(z.pop('geometry'))
+                    z["geometry"] = json.dumps(z.pop("geometry"))
                     cur.execute(SINGLE_INSERT, z)
 
-    print('Import done.')
+    print("Import done.")
 
 
 def import_data(cosmogony_path):
@@ -93,11 +97,13 @@ def publish():
 
     atomic operation that move the `import` schema to `public`.
     """
-    _pg_execute("""
+    _pg_execute(
+        """
         DROP TABLE if exists public.zones;
 
         ALTER TABLE import.zones SET SCHEMA public;
-    """)
+    """
+    )
 
 
 if __name__ == "__main__":

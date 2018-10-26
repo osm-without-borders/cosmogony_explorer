@@ -4,7 +4,6 @@ The main goal of this tool is to have some visual and geographical feedback on [
 
 ![cosmogony demo](./demo.gif)
 
-
 ## Usage
 
 This will run docker-compose containers, import the cosmogony zones to

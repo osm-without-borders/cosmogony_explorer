@@ -10,6 +10,9 @@ predefined = "web_mercator"
 
 [[tileset]]
 name = "$TILESET_NAME"
+minzoom = 0
+maxzoom = 20
+cache_limits = {minzoom = 0, maxzoom = 13}
 
 [[tileset.layer]]
 name = "vector-zones"

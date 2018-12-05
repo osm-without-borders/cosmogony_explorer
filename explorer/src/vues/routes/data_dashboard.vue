@@ -96,8 +96,6 @@
 </template>
 
 <script>
-
-  import axios from "axios";
   export default {
     name: "data_dashboard",
     data () {
@@ -106,11 +104,14 @@
       }
     },
     mounted() {
-        axios({ method: "GET", "url": "/data/test_results.json" }).then(result => {
-            this.testResults = result.data;
-        }, error => {
-            console.error(error);
-        });
-    },
+      fetch("/data/test_results.json")
+        .then(response => response.json())
+        .then(data => {
+          this.testResults = data
+        })
+      .catch(error => {
+        console.error(error)
+      })
+    }
   }
 </script>

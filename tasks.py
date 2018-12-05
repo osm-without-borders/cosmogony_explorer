@@ -8,14 +8,16 @@ logging.basicConfig(level=logging.INFO)
 @task()
 def run_local(ctx, cosmogony_file_name="cosmogony.json", build_dockers=False):
     pop_stack(ctx, build_dockers)
-    run_explorer(ctx, cosmogony_file_name)
+    run_explorer(ctx, cosmogony_file_name, restart_tiles=True)
     open_browser(ctx)
 
 @task()
 def open_browser(ctx):
-    explorer_ip = ctx.run("docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker-compose ps -q explorer)")
-    ip = explorer_ip.stdout.split('\n')[0]
-    ctx.run(f"sensible-browser 'http://{ip}/#/2.5/32/0'")
+    explorer_port = ctx.run("""
+        docker inspect -f '{{(index .NetworkSettings.Ports "80/tcp" 0).HostPort}}' $(docker-compose ps -q explorer)
+    """)
+    port = explorer_port.stdout.split('\n')[0]
+    ctx.run(f"sensible-browser 'http://localhost:{port}/#/2.5/32/0'")
 
 
 @task()
@@ -32,7 +34,7 @@ def _run_container(ctx, container_name, job):
 
 
 @task(default=True)
-def run_explorer(ctx, cosmogony_file_name="cosmogony.json"):
+def run_explorer(ctx, cosmogony_file_name="cosmogony.json", restart_tiles=False):
 
     path_in_container = f"/mnt/data/{cosmogony_file_name}"
     _run_container(ctx, "importer", f"./import.py import_data {path_in_container}")
@@ -44,6 +46,9 @@ def run_explorer(ctx, cosmogony_file_name="cosmogony.json"):
 
     _run_container(ctx, "importer", f"./import.py publish")
     ctx.run("docker-compose exec tiles /publish_tiles.sh", pty=True)
+
+    if restart_tiles:
+        ctx.run("docker-compose restart tiles", pty=True)
 
     generate_data_dashboard(ctx, cosmogony_file_name)
 

@@ -11,8 +11,7 @@ services:
       - ${PATH_TO_COSMOGONY_DIR:-./cosmogony_data}:/mnt/data
 
   data-dashboard:
-    image: cosmogony-data-dashboard
-    # image: osmwithoutborders/cosmogony-data-dashboard
+    image: osmwithoutborders/cosmogony-data-dashboard
     volumes:
       - ${PATH_TO_COSMOGONY_DIR:-./cosmogony_data}:/mnt/data
       - data-dashboard:/mnt/data-dashboard

@@ -1,7 +1,19 @@
+from contextlib import ContextDecorator
 from apistar.backends.sqlalchemy_backend import Session
 from apistar.exceptions import NotFound
 
 from .models import Zone
+
+class override_join_depth(ContextDecorator):
+    def __init__(self, new_depth):
+        self.new_depth = new_depth
+
+    def __enter__(self):
+        self.default_join_depth = Zone.children.property.strategy.join_depth
+        Zone.children.property.strategy.join_depth = self.new_depth
+
+    def __exit__(self, *args):
+        Zone.children.property.strategy.join_depth = self.default_join_depth
 
 
 def get_zone_with_children(session: Session, id: int):
@@ -16,7 +28,7 @@ def get_zone_with_children(session: Session, id: int):
         'children': [z.as_json() for z in children]
     }
 
-
+@override_join_depth(1)
 def get_zone_parents(session: Session, id: int):
     zone = session.query(Zone).get(id)
     if zone is None:

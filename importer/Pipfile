@@ -1,24 +1,17 @@
 [[source]]
-
 name = "pypi"
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 
-
 [packages]
-
 "psycopg2" = "*"
 ijson = "*"
-simplejson = "*"
 cffi = "*"
 fire = "*"
 retrying = "*"
-
+python-rapidjson = "*"
 
 [requires]
-
 python_version = "3.6"
 
-
 [dev-packages]
-

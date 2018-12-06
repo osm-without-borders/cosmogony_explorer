@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
 from os import environ
+from datetime import timedelta
 import psycopg2
 import sys
 import ijson.backends.yajl2_cffi as ijson
-import simplejson as json
+import rapidjson
+from rapidjson import NM_DECIMAL, NM_NATIVE
 import fire
 from retrying import retry
+import time
 
 def retry_if_db_error(exception):
     return isinstance(exception, psycopg2.OperationalError)
@@ -67,6 +70,14 @@ def _import_cosmogony_to_pg(cosmogony_path):
     )
 
     print("Importing cosmogony to pg...")
+    start = time.clock()
+    nb_zones = 0
+
+    def print_timer():
+        print(
+            f"{nb_zones} zones imported in "
+            f"{timedelta(seconds=(time.clock()-start))}"
+        )
 
     with open(cosmogony_path, "rb") as f:
         zones = ijson.items(f, "zones.item")
@@ -74,10 +85,17 @@ def _import_cosmogony_to_pg(cosmogony_path):
         with _pg_connect() as conn:
             with conn.cursor() as cur:
                 for z in zones:
-                    z["geometry"] = json.dumps(z.pop("geometry"))
+                    z["geometry"] = rapidjson.dumps(
+                        z.pop("geometry"),
+                        number_mode=NM_DECIMAL|NM_NATIVE
+                    )
                     cur.execute(SINGLE_INSERT, z)
+                    nb_zones += 1
+                    if nb_zones % 10000 == 0:
+                        print_timer()
 
     print("Import done.")
+    print_timer()
 
 
 def import_data(cosmogony_path):

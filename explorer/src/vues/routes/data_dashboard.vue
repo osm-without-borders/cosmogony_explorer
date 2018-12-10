@@ -96,13 +96,22 @@
 </template>
 
 <script>
-  import testResults from '../../data/test_results'
   export default {
     name: "data_dashboard",
-    data : function () {
+    data () {
       return {
-        testResults
+        testResults: null
       }
+    },
+    mounted() {
+      fetch("/data/test_results.json")
+        .then(response => response.json())
+        .then(data => {
+          this.testResults = data
+        })
+      .catch(error => {
+        console.error(error)
+      })
     }
   }
 </script>

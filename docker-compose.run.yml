@@ -1,0 +1,17 @@
+version: "3"
+
+volumes:
+  data-dashboard:
+
+services:
+  importer:
+    image: osmwithoutborders/cosmogony-importer
+    env_file: .env
+    volumes:
+      - ${PATH_TO_COSMOGONY_DIR:-./cosmogony_data}:/mnt/data
+
+  data-dashboard:
+    image: osmwithoutborders/cosmogony-data-dashboard
+    volumes:
+      - ${PATH_TO_COSMOGONY_DIR:-./cosmogony_data}:/mnt/data
+      - data-dashboard:/mnt/data-dashboard

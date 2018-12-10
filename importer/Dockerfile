@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.6-slim
 
 RUN apt-get update
 RUN apt-get -y install libyajl-dev
@@ -11,5 +11,3 @@ RUN pip install pipenv
 RUN pipenv install --system --deploy
 
 RUN chmod +x import.py
-
-CMD sleep infinity

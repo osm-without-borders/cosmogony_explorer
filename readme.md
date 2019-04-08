@@ -4,6 +4,23 @@ The main goal of this tool is to have some visual and geographical feedback on [
 
 ![cosmogony demo](./demo.gif)
 
+## Install
+
+```bash
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+sudo apt update
+# to check which version you'll install: apt-cache policy docker-ce
+sudo apt install docker-ce
+# to check if the service is running as expected:
+sudo systemctl status docker
+# You need to add yourself to the docker group to avoid somea lot of "sudo":
+sudo usermod -a -G docker `whoami`
+# And now you need to logout then login again so it's taken into account!
+```
+
 ## Usage
 
 This will run docker-compose containers, import the cosmogony zones to

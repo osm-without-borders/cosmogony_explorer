@@ -73,7 +73,7 @@ export function initMap(center, zoom) {
     })
 
     if(State.hierarchyId) { /* load filter state-full */
-      mp.setFilter('all', ['==', 'id', State.hierarchyId])
+      mp.setFilter('all', ['==', ['id'], State.hierarchyId])
     }
 
     mp.on('zoom', () => {
@@ -88,7 +88,7 @@ export function initMap(center, zoom) {
     mp.on('mousemove', "all", function (e) {
       mp.getCanvas().style.cursor = 'pointer'
       let feature = e.features[0]
-      fire('hover_hierarchy', feature.properties.id)
+      fire('hover_hierarchy', feature.id)
       let featureInfo = `<ul>${e.features.map((feature) => {
         return `<li class="map__popup__item">${feature.properties.name}</li>`
       }).join('')}</ul>`
@@ -120,7 +120,7 @@ export function initMap(center, zoom) {
     })
 
     listen('select_hierarchy', (id) => {
-      mp.setFilter('all', ['==', 'id', id])
+      mp.setFilter('all', ['==', ['id'], id])
     })
 
     listen('fit_map', (zoom, lngLat) => {

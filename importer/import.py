@@ -10,6 +10,7 @@ from rapidjson import NM_DECIMAL, NM_NATIVE
 import fire
 from retrying import retry
 import time
+import gzip
 
 def retry_if_db_error(exception):
     return isinstance(exception, psycopg2.OperationalError)
@@ -79,12 +80,11 @@ def _import_cosmogony_to_pg(cosmogony_path):
             f"{timedelta(seconds=(time.clock()-start))}"
         )
 
-    with open(cosmogony_path, "rb") as f:
-        zones = ijson.items(f, "zones.item")
-
+    def import_zones(zones_iterator):
+        nonlocal nb_zones
         with _pg_connect() as conn:
             with conn.cursor() as cur:
-                for z in zones:
+                for z in zones_iterator:
                     z["geometry"] = rapidjson.dumps(
                         z.pop("geometry"),
                         number_mode=NM_DECIMAL|NM_NATIVE
@@ -93,6 +93,17 @@ def _import_cosmogony_to_pg(cosmogony_path):
                     nb_zones += 1
                     if nb_zones % 10000 == 0:
                         print_timer()
+
+    if cosmogony_path.endswith('.json'):
+        with open(cosmogony_path, "rb") as f:
+            zones = ijson.items(f, "zones.item")
+            import_zones(zones)
+    elif cosmogony_path.endswith('.jsonl.gz'):
+        with gzip.open(cosmogony_path) as f:
+            zones = (rapidjson.loads(line) for line in f)
+            import_zones(zones)
+    else:
+        raise Exception("Unknown file extension in '{}'", cosmogony_path)
 
     print("Import done.")
     print_timer()

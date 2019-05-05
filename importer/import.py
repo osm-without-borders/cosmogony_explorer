@@ -11,6 +11,8 @@ import fire
 from retrying import retry
 import time
 import gzip
+from multiprocessing import cpu_count, Process, get_context
+from multiprocessing.pool import Pool
 
 def retry_if_db_error(exception):
     return isinstance(exception, psycopg2.OperationalError)
@@ -40,9 +42,21 @@ SINGLE_INSERT = """
         %(id)s, %(parent)s, %(name)s,
         %(admin_level)s, %(zone_type)s,
         %(osm_id)s, %(wikidata)s,
-        ST_Transform(ST_SetSRID(ST_GeomFromGeoJSON(%(geometry)s), 4326), 3857)
+        ST_Transform(ST_SetSRID(ST_MakeValid(ST_GeomFromGeoJSON(%(geometry)s)), 4326), 3857)
     )
 """
+
+def import_zone(z_line):
+    global pg_cur
+    if isinstance(z_line, (str, bytes)):
+        z = rapidjson.loads(z_line)
+    else:
+        z = z_line
+    z["geometry"] = rapidjson.dumps(
+        z.pop("geometry"),
+        number_mode=NM_DECIMAL|NM_NATIVE
+    )
+    pg_cur.execute(SINGLE_INSERT, z)
 
 
 def _import_cosmogony_to_pg(cosmogony_path):
@@ -70,29 +84,36 @@ def _import_cosmogony_to_pg(cosmogony_path):
     """
     )
 
-    print("Importing cosmogony to pg...")
-    start = time.clock()
-    nb_zones = 0
-
-    def print_timer():
-        print(
-            f"{nb_zones} zones imported in "
-            f"{timedelta(seconds=(time.clock()-start))}"
-        )
+    mp_context = get_context()
+    class SafeProcess(mp_context.Process):
+        def run(self):
+            global pg_cur
+            with _pg_connect() as pg_conn:
+                with pg_conn.cursor() as pg_cur:
+                    return super().run()
+    mp_context.Process = SafeProcess
 
     def import_zones(zones_iterator):
-        nonlocal nb_zones
-        with _pg_connect() as conn:
-            with conn.cursor() as cur:
-                for z in zones_iterator:
-                    z["geometry"] = rapidjson.dumps(
-                        z.pop("geometry"),
-                        number_mode=NM_DECIMAL|NM_NATIVE
-                    )
-                    cur.execute(SINGLE_INSERT, z)
-                    nb_zones += 1
-                    if nb_zones % 10000 == 0:
-                        print_timer()
+        print("Importing cosmogony zones to pg...")
+        start = time.clock()
+        def print_timer():
+            print(
+                f"{nb_zones} zones imported in "
+                f"{timedelta(seconds=(time.clock()-start))}"
+            )
+
+        nb_workers = min(8, cpu_count())
+        with Pool(nb_workers, context=mp_context) as pool:
+            res = pool.imap_unordered(import_zone, zones_iterator, chunksize=10)
+            pool.close()
+            nb_zones = 0
+            for _ in res:
+                nb_zones += 1
+                if nb_zones % 10000 == 0:
+                    print_timer()
+            pool.join()
+
+        print_timer()
 
     if cosmogony_path.endswith('.json'):
         with open(cosmogony_path, "rb") as f:
@@ -100,13 +121,12 @@ def _import_cosmogony_to_pg(cosmogony_path):
             import_zones(zones)
     elif cosmogony_path.endswith('.jsonl.gz'):
         with gzip.open(cosmogony_path) as f:
-            zones = (rapidjson.loads(line) for line in f)
+            zones = (line for line in f)
             import_zones(zones)
     else:
         raise Exception("Unknown file extension in '{}'", cosmogony_path)
 
     print("Import done.")
-    print_timer()
 
 
 def import_data(cosmogony_path):

@@ -42,7 +42,7 @@ SINGLE_INSERT = """
         %(id)s, %(parent)s, %(name)s,
         %(admin_level)s, %(zone_type)s,
         %(osm_id)s, %(wikidata)s,
-        ST_Transform(ST_SetSRID(ST_MakeValid(ST_GeomFromGeoJSON(%(geometry)s)), 4326), 3857)
+        ST_MakeValid(ST_Transform(ST_SetSRID(ST_GeomFromGeoJSON(%(geometry)s), 4326), 3857))
     )
 """
 

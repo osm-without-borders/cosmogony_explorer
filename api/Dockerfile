@@ -1,5 +1,7 @@
 FROM python:3.6-slim
 
+RUN apt-get update && apt-get -y install gcc
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY Pipfile* ./

@@ -27,17 +27,24 @@ def pop_stack(ctx, build_dockers=False):
     ctx.run("docker-compose up -d")
 
 
-def _run_container(ctx, container_name, job):
+def _run_container(ctx, container_name, job, cosmogony_data_dir=None):
     main_docker_files = _get_docker_compose()
     run_docker_files = {"COMPOSE_FILE": main_docker_files + ":docker-compose.run.yml"}
+    if cosmogony_data_dir:
+        run_docker_files['PATH_TO_COSMOGONY_DIR'] = cosmogony_data_dir
     ctx.run(f"docker-compose run --rm {container_name} {job}", env=run_docker_files)
 
 
 @task(default=True)
 def run_explorer(ctx, cosmogony_file_name="cosmogony.json", restart_tiles=False):
-
+    cosmogony_data_dir, cosmogony_file_name = os.path.split(cosmogony_file_name)
+    cosmogony_data_dir = cosmogony_data_dir or None
     path_in_container = f"/mnt/data/{cosmogony_file_name}"
-    _run_container(ctx, "importer", f"./import.py import_data {path_in_container}")
+    _run_container(ctx,
+        "importer",
+        f"./import.py import_data {path_in_container}",
+        cosmogony_data_dir=cosmogony_data_dir
+    )
 
     ctx.run(
         "docker-compose exec tiles /usr/bin/t_rex generate -c /config_generate.toml --minzoom 0 --maxzoom 6 --overwrite true --progress true",
@@ -50,8 +57,8 @@ def run_explorer(ctx, cosmogony_file_name="cosmogony.json", restart_tiles=False)
     if restart_tiles:
         ctx.run("docker-compose restart tiles", pty=True)
 
-    generate_data_dashboard(ctx, cosmogony_file_name)
-
+    ## TODO Update cosmogony-data-dashboard to handle .jsonl.gz format
+    # generate_data_dashboard(ctx, cosmogony_file_name)
 
 def _get_docker_compose():
     return os.environ.get("COMPOSE_FILE", "docker-compose.yml")

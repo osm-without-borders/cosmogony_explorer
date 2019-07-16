@@ -1,4 +1,6 @@
-FROM sourcepole/t-rex
+# t-rex v0.9.2
+FROM sourcepole/t-rex@sha256:c28eb34e46cd2526a3b88be600e680838263852a53afe7a7a2bfe02d0482abf0
+
 
 # we need to install envsubst
 USER root

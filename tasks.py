@@ -57,8 +57,7 @@ def run_explorer(ctx, cosmogony_file_name="cosmogony.json", restart_tiles=False)
     if restart_tiles:
         ctx.run("docker-compose restart tiles", pty=True)
 
-    ## TODO Update cosmogony-data-dashboard to handle .jsonl.gz format
-    # generate_data_dashboard(ctx, cosmogony_file_name)
+    generate_data_dashboard(ctx, cosmogony_file_name)
 
 def _get_docker_compose():
     return os.environ.get("COMPOSE_FILE", "docker-compose.yml")

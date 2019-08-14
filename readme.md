@@ -6,6 +6,13 @@ The main goal of this tool is to have some visual and geographical feedback on [
 
 ## Install
 
+#### Requirements
+
+ * docker
+ * docker-compose
+ * python >= 3.6
+
+#### Quick guide to install Docker on Ubuntu
 ```bash
 sudo apt update
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
@@ -31,22 +38,17 @@ You may need to run it with `sudo`, as it launches `docker-compose` commands.
 The easiest way to run it:
 
 ```bash
-pipenv install
+# Install python dependencies in a new virtualenv
+pipenv install --deploy
+
+# Start cosmogony explorer services and import cosmogony data from an input file
+pipenv run inv -e run-local cosmogony.json
 ```
 
-```bash
-pipenv run inv -e run-local
-```
+Accepted cosmogony formats are `.json` and `.jsonl.gz`.
 
-You can set a path to the cosmogony data by changing the environment variable `PATH_TO_COSMOGONY_DIR`.
-You can do this either just with a classic environment variable, or by changing the file `.env`.
-By default it will load the data in the `./cosmogony_data/` directory.
-
-By default it will load a file named `cosmogony.json` in this directory. You can change the file name with the cli parameter `--cosmogony-file-name=<my_cosmogony_file>`
-
-```bash
-PATH_TO_COSMOGONY_DIR=./my_data_dir pipenv run inv -e run-local --cosmogony-file-name=cosmo_lux.json
-```
+> Note that during the import process the directory where the cosmogony file is located will
+be mounted as a read-only docker volume.
 
 ## Development
 
@@ -54,5 +56,5 @@ If you want to change stuff in the repository, you need to build custom images.
 To do this, you just need to add the `--build-dockers` argument to the `invoke` commands:
 
 ```bash
-PATH_TO_COSMOGONY_DIR=./my_data_dir pipenv run inv -e run-local --cosmogony-file-name=cosmo_lux.json --build-dockers
+pipenv run inv -e run-local cosmogony.json --build-dockers
 ```

@@ -8,10 +8,10 @@ services:
     image: osmwithoutborders/cosmogony-importer
     env_file: .env
     volumes:
-      - ${PATH_TO_COSMOGONY_DIR:-./cosmogony_data}:/mnt/data
+      - ${PATH_TO_COSMOGONY_DIR:-./cosmogony_data}:/mnt/data:ro
 
   data-dashboard:
     image: osmwithoutborders/cosmogony-data-dashboard
     volumes:
-      - ${PATH_TO_COSMOGONY_DIR:-./cosmogony_data}:/mnt/data
+      - ${PATH_TO_COSMOGONY_DIR:-./cosmogony_data}:/mnt/data:ro
       - data-dashboard:/mnt/data-dashboard

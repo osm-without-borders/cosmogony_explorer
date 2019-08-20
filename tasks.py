@@ -6,7 +6,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 @task()
-def run_local(ctx, cosmogony_file_name="cosmogony.json", build_dockers=False):
+def run_local(ctx, cosmogony_file_name, build_dockers=False):
     pop_stack(ctx, build_dockers)
     run_explorer(ctx, cosmogony_file_name, restart_tiles=True)
     open_browser(ctx)
@@ -15,9 +15,12 @@ def run_local(ctx, cosmogony_file_name="cosmogony.json", build_dockers=False):
 def open_browser(ctx):
     explorer_port = ctx.run("""
         docker inspect -f '{{(index .NetworkSettings.Ports "80/tcp" 0).HostPort}}' $(docker-compose ps -q explorer)
-    """)
+    """, hide=True)
     port = explorer_port.stdout.split('\n')[0]
-    ctx.run(f"sensible-browser 'http://localhost:{port}/#/2.5/32/0'")
+    explorer_url = f'http://localhost:{port}'
+    print(f'Cosmogony explorer is running on {explorer_url}')
+    if ctx.run('which sensible-browser', warn=True, hide=True).ok:
+        ctx.run(f"sensible-browser '{explorer_url}/#/2.5/32/0'")
 
 
 @task()
@@ -37,8 +40,7 @@ def _run_container(ctx, container_name, job, cosmogony_data_dir=None):
 
 @task(default=True)
 def run_explorer(ctx, cosmogony_file_name="cosmogony.json", restart_tiles=False):
-    cosmogony_data_dir, cosmogony_file_name = os.path.split(cosmogony_file_name)
-    cosmogony_data_dir = cosmogony_data_dir or None
+    cosmogony_data_dir, cosmogony_file_name = os.path.split(os.path.realpath(cosmogony_file_name))
     path_in_container = f"/mnt/data/{cosmogony_file_name}"
     _run_container(ctx,
         "importer",
@@ -57,17 +59,17 @@ def run_explorer(ctx, cosmogony_file_name="cosmogony.json", restart_tiles=False)
     if restart_tiles:
         ctx.run("docker-compose restart tiles", pty=True)
 
-    ## TODO Update cosmogony-data-dashboard to handle .jsonl.gz format
-    # generate_data_dashboard(ctx, cosmogony_file_name)
+    generate_data_dashboard(ctx, cosmogony_file_name, cosmogony_data_dir)
 
 def _get_docker_compose():
     return os.environ.get("COMPOSE_FILE", "docker-compose.yml")
 
 
 @task()
-def generate_data_dashboard(ctx, cosmogony_file_name="cosmogony.json"):
+def generate_data_dashboard(ctx, cosmogony_file_name, cosmogony_data_dir):
     _run_container(
         ctx,
         "data-dashboard",
         f"--cosmogony=/mnt/data/{cosmogony_file_name} --output=/mnt/data-dashboard/test_results.json",
+        cosmogony_data_dir=cosmogony_data_dir,
     )

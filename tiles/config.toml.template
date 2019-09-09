@@ -23,7 +23,7 @@ geometry_field = "geometry"
 geometry_type = "MULTIPOLYGON"
 srid = 3857
 fid_field = "id"
-buffer_size = 10
+buffer_size = 4
 simplify = true
   # Queries for different zoom levels:
   [[tileset.layer.query]]

@@ -20,11 +20,12 @@ def retry_if_db_error(exception):
 # we wait a bit for postgres to be ready since if used with docker, so docker might take a while to start
 @retry(stop_max_delay=10000, retry_on_exception=retry_if_db_error)
 def _pg_connect():
+    host = environ.get("POSTGRES_HOST")
     dbname = environ.get("POSTGRES_DB")
     user = environ.get("POSTGRES_USER")
     password = environ.get("POSTGRES_PASSWORD")
     return psycopg2.connect(
-        f"host=postgres dbname={dbname} user={user} password={password}"
+        f"host={host} dbname={dbname} user={user} password={password}"
     )
 
 

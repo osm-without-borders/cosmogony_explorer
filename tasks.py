@@ -30,12 +30,12 @@ def pop_stack(ctx, build_dockers=False):
     ctx.run("docker-compose up -d")
 
 
-def _run_container(ctx, container_name, job, cosmogony_data_dir=None):
+def _run_container(ctx, container_name, job, cosmogony_data_dir=None, continue_on_fail=False):
     main_docker_files = _get_docker_compose()
     run_docker_files = {"COMPOSE_FILE": main_docker_files + ":docker-compose.run.yml"}
     if cosmogony_data_dir:
         run_docker_files['PATH_TO_COSMOGONY_DIR'] = cosmogony_data_dir
-    ctx.run(f"docker-compose run --rm {container_name} {job}", env=run_docker_files)
+    ctx.run(f"docker-compose run --rm {container_name} {job}", env=run_docker_files, warn=continue_on_fail)
 
 
 @task(default=True)
@@ -72,4 +72,5 @@ def generate_data_dashboard(ctx, cosmogony_file_name, cosmogony_data_dir):
         "data-dashboard",
         f"--cosmogony=/mnt/data/{cosmogony_file_name} --output=/mnt/data-dashboard/test_results.json",
         cosmogony_data_dir=cosmogony_data_dir,
+        continue_on_fail=True,
     )

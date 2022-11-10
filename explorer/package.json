@@ -30,7 +30,7 @@
     "webpack-cli": "^2.0.4"
   },
   "dependencies": {
-    "ejs": "^2.6.1",
+    "ejs": "^3.1.7",
     "expressjs": "^1.0.1"
   }
 }

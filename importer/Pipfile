@@ -4,7 +4,7 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 [packages]
-"psycopg2" = "*"
+psycopg2-binary = "*"
 ijson = "*"
 cffi = "*"
 fire = "*"
@@ -12,6 +12,6 @@ retrying = "*"
 python-rapidjson = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.9"
 
 [dev-packages]

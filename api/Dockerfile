@@ -1,6 +1,6 @@
-FROM python:3.6-slim
+FROM python:3.9-slim
 
-RUN apt-get update && apt-get -y install gcc
+RUN apt-get update && apt-get -y install gcc libpq-dev
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

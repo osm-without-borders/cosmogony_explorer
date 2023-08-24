@@ -8,7 +8,7 @@ export function initMap(center, zoom) {
 
   const mp = new mapboxgl.Map({
     container: 'map-container',
-    style: 'https://maps.tilehosting.com/styles/positron/style.json?key=dcCQFarAif6ie2xrgCEF',
+    style: 'https://api.maptiler.com/maps/basic-v2-light/style.json?key=7B5lTONVe91Cn6e3onCo',
     zoom: zoom,
     center: center,
     hash: false

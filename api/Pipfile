@@ -9,12 +9,12 @@ name = "pypi"
 
 apistar = "==0.3.9"
 sqlalchemy = "*"
-"psycopg2-binary" = "*"
+psycopg2-binary = "*"
 
 
 [requires]
 
-python_version = "3.6"
+python_version = "3.9"
 
 
 [dev-packages]

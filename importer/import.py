@@ -96,11 +96,11 @@ def _import_cosmogony_to_pg(cosmogony_path):
 
     def import_zones(zones_iterator):
         print("Importing cosmogony zones to pg...")
-        start = time.clock()
+        start = time.time()
         def print_timer():
             print(
                 f"{nb_zones} zones imported in "
-                f"{timedelta(seconds=(time.clock()-start))}"
+                f"{timedelta(seconds=(time.time()-start))}"
             )
 
         nb_workers = min(8, cpu_count())

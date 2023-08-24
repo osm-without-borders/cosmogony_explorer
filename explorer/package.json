@@ -20,17 +20,17 @@
   },
   "homepage": "https://github.com/osm-without-borders/cosmogony_explorer#readme",
   "devDependencies": {
-    "prettier": "1.12.0",
-    "uglifyjs-webpack-plugin": "^1.1.8",
-    "vue": "^2.5.13",
-    "vue-loader": "^14.1.1",
-    "vue-router": "^3.0.1",
-    "vue-template-compiler": "^2.5.13",
-    "webpack": "^4.0.0-beta.0",
-    "webpack-cli": "^2.0.4"
+    "prettier": "3.0.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "vue": "3.3.4",
+    "vue-loader": "^17.2.2",
+    "vue-router": "^4.2.4",
+    "vue-template-compiler": "^2.7.14",
+    "webpack": "^4.0.0",
+    "webpack-cli": "^4.0.0"
   },
   "dependencies": {
-    "ejs": "^2.6.1",
+    "ejs": "3.1.9",
     "expressjs": "^1.0.1"
   }
 }

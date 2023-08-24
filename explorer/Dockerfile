@@ -1,4 +1,4 @@
-FROM node:8.9-stretch as builder
+FROM node:16.14.2-stretch-slim as builder
 
 RUN mkdir -p /tmp/cosmo_build
 COPY . /tmp/cosmo_build

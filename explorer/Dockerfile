@@ -10,4 +10,5 @@ RUN cd /tmp/cosmo_build &&\
 
 FROM nginx:alpine
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /tmp/cosmo_build/ /usr/share/nginx/html/

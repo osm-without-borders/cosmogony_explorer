@@ -25,6 +25,23 @@ srid = 3857
 fid_field = "id"
 buffer_size = 10
 simplify = true
+  # Queries for different zoom levels:
+  [[tileset.layer.query]]
+  minzoom = 0
+  maxzoom = 2
+  sql = """
+    SELECT id, name, admin_level, zone_type, geometry
+    FROM $TABLE_SPACE.zones
+    WHERE geometry && !bbox! AND admin_level <= 2
+  """
+  [[tileset.layer.query]]
+  minzoom = 3
+  maxzoom = 20
+  sql = """
+    SELECT id, name, admin_level, zone_type, geometry
+    FROM $TABLE_SPACE.zones
+    WHERE geometry && !bbox!
+  """
 
 [cache.file]
 base = "/tmp/mvtcache"
@@ -32,4 +49,4 @@ base = "/tmp/mvtcache"
 [webserver]
 bind = "0.0.0.0"
 port = 6767
-threads = 1
+threads = 4

@@ -35,8 +35,8 @@ simplify = true
     WHERE geometry && !bbox! AND admin_level <= 2
   """
   [[tileset.layer.query]]
-  minzoom = 7
-  maxzoom = 7
+  minzoom = 3
+  maxzoom = 20
   sql = """
     SELECT id, name, admin_level, zone_type, geometry
     FROM $TABLE_SPACE.zones

@@ -104,7 +104,7 @@ def _import_cosmogony_to_pg(cosmogony_path):
                 f"{timedelta(seconds=(time.time()-start))}"
             )
 
-        nb_workers = 4
+        nb_workers = min(8, cpu_count())
         with Pool(nb_workers, context=mp_context) as pool:
             res = pool.imap_unordered(import_zone, zones_iterator, chunksize=10)
             pool.close()

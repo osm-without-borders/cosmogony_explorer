@@ -57,7 +57,8 @@ def import_zone(z_line):
         z.pop("geometry"),
         number_mode=NM_DECIMAL|NM_NATIVE
     )
-    pg_cur.execute(SINGLE_INSERT, z)
+    if z["geometry"] != "null":
+        pg_cur.execute(SINGLE_INSERT, z)
 
 
 def _import_cosmogony_to_pg(cosmogony_path):

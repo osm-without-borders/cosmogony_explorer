@@ -40,7 +40,7 @@ simplify = true
   sql = """
     SELECT id, name, admin_level, zone_type, geometry
     FROM $TABLE_SPACE.zones
-    WHERE geometry && !bbox! 
+    WHERE geometry && !bbox!
   """
 
 [cache.file]

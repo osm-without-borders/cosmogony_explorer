@@ -1,5 +1,8 @@
 FROM python:3.9-slim
 
+ARG http_proxy=http://10.100.9.1:2001
+ARG https_proxy=http://10.100.9.1:2001
+
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED=1
 

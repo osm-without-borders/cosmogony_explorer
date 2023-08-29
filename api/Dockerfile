@@ -1,5 +1,6 @@
 FROM python:3.9-slim
-
+ARG http_proxy=http://10.100.9.1:2001
+ARG https_proxy=http://10.100.9.1:2001
 RUN apt-get update && apt-get -y install gcc libpq-dev
 
 RUN mkdir -p /usr/src/app

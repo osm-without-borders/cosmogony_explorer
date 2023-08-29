@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, text
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import object_session
 import json
@@ -25,7 +25,7 @@ class Zone(Base):
 
     @property
     def bounding_box(self):
-        query = 'select st_asgeojson(ST_Transform(st_envelope(geometry), 4326)) from zones where id = :id'
+        query = text('select st_asgeojson(ST_Transform(st_envelope(geometry), 4326)) from zones where id = :id')
         row = object_session(self).execute(query, {'id': self.id}).first()
         if row is None:
             return None
